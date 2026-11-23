@@ -213,7 +213,7 @@
 
   <section class="block" id="submit">
     <h2>提交 / 纠错</h2>
-    <p class="sub">档案由社区共建。填写后复制模板，在社群提交；审核通过后统一上链存证，贡献者记入档案贡献榜。</p>
+    <p class="sub">档案由社区共建。填写后点「复制并去提交」，模板会自动复制，粘贴到 GitHub Issue 正文即可。没有 GitHub 账号的，可把模板发到社群，由维护者代登记。审核通过后统一上链存证，贡献者记入贡献榜。</p>
     <div class="grid2">
       <div>
         <div class="field"><label>日期（YYYY-MM-DD）</label><input id="fDate" placeholder="2026-11-23"></div>
@@ -223,6 +223,9 @@
         <div class="field"><label>进化意义</label><textarea id="fImpact" placeholder="它改变了什么"></textarea></div>
         <button class="btn" id="genBtn">生成提交模板</button>
         <button class="btn ghost" id="copyBtn" style="margin-left:8px">复制</button>
+        <a class="btn" id="goSubmit" style="margin-left:8px;display:none"
+           href="https://github.com/01First/01-evolution-archive/issues/new?template=contribution.yml"
+           target="_blank" rel="noopener">复制并去提交</a>
       </div>
       <div>
         <div class="out" id="out">填写左侧内容后点击「生成提交模板」。</div>
@@ -433,12 +436,20 @@ document.getElementById("genBtn").addEventListener("click",()=>{
 规范化 JSON（用于计算 SHA-256 指纹）：
 ${canon(o)}`;
   document.getElementById("out").textContent = txt;
+  document.getElementById("goSubmit").style.display = "inline-block";
 });
 document.getElementById("copyBtn").addEventListener("click",async()=>{
   const t=document.getElementById("out").textContent;
   try{ await navigator.clipboard.writeText(t); document.getElementById("copyBtn").textContent="已复制"; }
   catch(e){ document.getElementById("copyBtn").textContent="请手动复制"; }
   setTimeout(()=>document.getElementById("copyBtn").textContent="复制",1200);
+});
+document.getElementById("goSubmit").addEventListener("click",async e=>{
+  e.preventDefault();
+  const t = document.getElementById("out").textContent;
+  try{ await navigator.clipboard.writeText(t); toast("模板已复制，粘贴到 Issue 正文即可"); }
+  catch(err){ toast("复制失败，请手动选中右侧模板复制"); }
+  window.open(e.currentTarget.href, "_blank", "noopener");
 });
 const VERIFY_CMD = "git clone https://github.com/01First/01-evolution-archive.git && cd 01-evolution-archive && python3 contracts/verify_merkle.py --chain";
 function toast(msg){
