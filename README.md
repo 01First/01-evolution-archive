@@ -2,7 +2,7 @@
 
 把“区块链的进化史”做成一个由社区共建、链上存证的公开档案。
 
-- 在线站点（部署后）：https://01first.github.io/01-evolution-archive/
+- 在线站点：https://01first.github.io/01-evolution-archive/
 - 存证网络：Polygon PoS
 - 代币：01 Evolution（进化币）`0x095d3d6e62c8e2e845a38d239601b10c71fff1b7`
 - DEX 交易对：`0x0b202ad83212b460bc2b26913b3727662383575b`
