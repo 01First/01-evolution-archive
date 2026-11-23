@@ -1,8 +1,25 @@
 # 01 Evolution Archive · 01 进化档案馆
 
+![Stars](https://img.shields.io/github/stars/01First/01-evolution-archive?style=flat-square&color=22d3ee)
+![Records](https://img.shields.io/badge/records-30%2F30%20on--chain-34d399?style=flat-square)
+![Network](https://img.shields.io/badge/network-Polygon%20PoS-8b5cf6?style=flat-square)
+![Season](https://img.shields.io/badge/season%201-live-fbbf24?style=flat-square)
+
+<p align="center"><img src="og-cover.png" alt="01 进化档案馆" width="100%"></p>
+
 把“区块链的进化史”做成一个由社区共建、链上存证的公开档案。
 
+**30 秒自证**（不用信我们，自己跑）：
+
+```bash
+git clone https://github.com/01First/01-evolution-archive.git && cd 01-evolution-archive
+python3 contracts/verify_merkle.py --chain
+```
+
+输出 `Merkle 证明: 30/30 通过` 和 `结果: PASS`，说明档案内容与 Polygon 上的存证一致。
+
 - 在线站点：https://01first.github.io/01-evolution-archive/
+- 透明度页：https://01first.github.io/01-evolution-archive/transparency.html
 - 存证网络：Polygon PoS
 - 代币：01 Evolution（进化币）`0x095d3d6e62c8e2e845a38d239601b10c71fff1b7`
 - DEX 交易对：`0x0b202ad83212b460bc2b26913b3727662383575b`

@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>01 进化档案馆 · 区块链进化史</title>
 <meta name="description" content="01 Evolution Archive：由社区共建、链上存证的区块链进化史档案。">
+<link rel="icon" href="01_logo.png">
+<link rel="canonical" href="https://01first.github.io/01-evolution-archive/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="01 进化档案馆">
+<meta property="og:title" content="01 进化档案馆 · 区块链进化史">
+<meta property="og:description" content="社区共建、Polygon 链上存证的区块链进化史档案。30/30 条记录已上链，Merkle 证明可独立核验。">
+<meta property="og:url" content="https://01first.github.io/01-evolution-archive/">
+<meta property="og:image" content="https://01first.github.io/01-evolution-archive/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="01 进化档案馆 · 区块链进化史">
+<meta name="twitter:description" content="社区共建、链上存证的区块链进化史档案。30/30 条记录已上链。">
+<meta name="twitter:image" content="https://01first.github.io/01-evolution-archive/og-cover.png">
 <style>
   :root{
     --bg:#05070c; --panel:#0b1220; --panel2:#0e1728; --line:#1e293b;
@@ -114,6 +128,11 @@
     font-size:13px;font-weight:700;cursor:pointer}
   .btn:hover{filter:brightness(1.08)}
   .btn.ghost{background:#0a1422;color:#bae6fd;border:1px solid #1e4c6b;font-weight:500}
+  .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);opacity:0;
+    background:#0b1220;border:1px solid rgba(34,211,238,.45);color:#bae6fd;border-radius:10px;
+    padding:10px 16px;font-size:13px;z-index:50;transition:.22s;pointer-events:none}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
   .out{white-space:pre-wrap;background:#060c16;border:1px solid var(--line);border-radius:10px;
     padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
     color:#a5f3fc;min-height:150px;margin-top:10px}
@@ -171,6 +190,11 @@
         <div class="stat"><b id="statEras">5</b><span>个时代</span></div>
         <div class="stat"><b>SHA-256</b><span>记录指纹</span></div>
         <div class="stat"><b>Polygon</b><span>存证网络</span></div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#submit">提交一条记录</a>
+        <button class="btn ghost copy-verify" type="button">复制核验命令</button>
+        <a class="btn ghost" href="transparency.html">看透明度页</a>
       </div>
     </div>
   </header>
@@ -269,6 +293,8 @@
         <p style="margin-top:14px">
           <a class="btn" href="https://github.com/01First/01-evolution-archive/issues/new?template=contribution.yml" target="_blank" rel="noopener">登记贡献</a>
           <a class="btn ghost" href="POINTS.md" style="margin-left:8px">查看完整规则</a>
+          <button class="btn ghost copy-verify" type="button" style="margin-left:8px">复制核验命令</button>
+          <a class="btn ghost" href="transparency.html" style="margin-left:8px">透明度页</a>
         </p>
         <p class="note">首批开放：内容创作、开发/设计/文档、档案纠错、GitHub 讨论。官方 X/Telegram/Discord 尚未开通，相关社交任务暂缓计分。</p>
         <p class="note warn">积分只记录贡献，不可转让、不构成收益承诺；奖励来自团队预留份额，不新增发行、不动池子。发奖合约已部署且 owner 已转至奖励 Safe；团队 150 亿已进入 48 个月线性锁仓，详见<a href="transparency.html">透明度页</a>。</p>
@@ -413,6 +439,39 @@ document.getElementById("copyBtn").addEventListener("click",async()=>{
   try{ await navigator.clipboard.writeText(t); document.getElementById("copyBtn").textContent="已复制"; }
   catch(e){ document.getElementById("copyBtn").textContent="请手动复制"; }
   setTimeout(()=>document.getElementById("copyBtn").textContent="复制",1200);
+});
+const VERIFY_CMD = "git clone https://github.com/01First/01-evolution-archive.git && cd 01-evolution-archive && python3 contracts/verify_merkle.py --chain";
+function toast(msg){
+  let t = document.querySelector(".toast");
+  if(!t){ t = document.createElement("div"); t.className = "toast"; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.add("on");
+  clearTimeout(t._h);
+  t._h = setTimeout(()=>t.classList.remove("on"), 1800);
+}
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(e){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e2){ return false; }
+  }
+}
+document.querySelectorAll(".copy-verify").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    const ok = await copyText(VERIFY_CMD);
+    toast(ok ? "已复制，粘贴到终端运行" : "复制失败，请手动复制 README 中的命令");
+  });
 });
 buildChips(); render();
 </script>
