@@ -1,0 +1,33 @@
+name: 档案纠错
+description: 指出某条记录的事实错误、失效来源或缺失信息
+title: "[纠错] "
+body:
+  - type: input
+    id: record
+    attributes:
+      label: 记录标题或编号
+      placeholder: 例如：The Merge / #17
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: 问题描述
+      description: 哪一处不准确，正确内容是什么
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 权威来源
+      description: 官方公告、文档、区块浏览器等可直接核验的链接
+      placeholder: https://
+    validations:
+      required: true
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: 声明
+      options:
+        - label: 我提供的来源真实有效，未伪造截图或数据
+          required: true

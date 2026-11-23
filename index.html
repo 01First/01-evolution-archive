@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 进化档案馆 · 区块链进化史</title>
+<meta name="description" content="01 Evolution Archive：由社区共建、链上存证的区块链进化史档案。">
+<style>
+  :root{
+    --bg:#05070c; --panel:#0b1220; --panel2:#0e1728; --line:#1e293b;
+    --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b;
+    --cyan:#22d3ee; --blue:#3b82f6; --violet:#8b5cf6; --gold:#fbbf24;
+    --green:#34d399; --red:#fb7185;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(900px 520px at 50% -12%, rgba(34,211,238,.10), transparent 62%),
+      radial-gradient(760px 420px at 88% 18%, rgba(139,92,246,.08), transparent 60%),
+      linear-gradient(rgba(30,41,59,.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,41,59,.16) 1px, transparent 1px);
+    background-size:auto,auto,44px 44px,44px 44px}
+  a{color:var(--cyan);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 22px 80px}
+  nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;
+    padding:12px 0;margin-bottom:8px;background:rgba(5,7,12,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(30,41,59,.7)}
+  nav img{width:34px;height:34px;border-radius:9px}
+  nav .brand{font-weight:700;letter-spacing:.6px;font-size:15px}
+  nav .brand span{color:var(--cyan)}
+  nav .links{margin-left:auto;display:flex;gap:18px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  nav .links a{color:var(--muted)}
+  nav .links a:hover{color:var(--cyan);text-decoration:none}
+
+  header.hero{display:flex;gap:30px;align-items:center;flex-wrap:wrap;padding:46px 0 26px}
+  .hero-logo{width:132px;height:132px;border-radius:30px;flex:0 0 auto;
+    box-shadow:0 0 70px rgba(34,211,238,.20),0 0 0 1px rgba(34,211,238,.14) inset}
+  .hero-copy{flex:1;min-width:280px}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:1.6px;
+    text-transform:uppercase;color:var(--cyan);border:1px solid rgba(34,211,238,.32);
+    background:rgba(8,47,58,.5);border-radius:999px;padding:4px 12px}
+  .kicker i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+  h1{font-size:38px;line-height:1.2;margin:16px 0 10px;letter-spacing:.5px}
+  h1 em{font-style:normal;color:var(--cyan)}
+  .lead{color:var(--muted);font-size:15px;max-width:640px;margin:0}
+  .stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:24px}
+  .stat b{display:block;font-size:26px;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+  .stat span{font-size:12.5px;color:var(--dim)}
+
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:18px 0 26px}
+  .search{flex:1;min-width:220px;display:flex;align-items:center;gap:9px;
+    background:#080f1b;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+  .search input{flex:1;background:transparent;border:0;outline:0;color:var(--text);font-size:13.5px}
+  .search svg{opacity:.55}
+  .chips{display:flex;gap:7px;flex-wrap:wrap}
+  .chip{font-size:12px;color:var(--muted);background:#0a1422;border:1px solid var(--line);
+    border-radius:999px;padding:5px 11px;cursor:pointer;user-select:none;transition:.15s}
+  .chip:hover{color:var(--text);border-color:#2b4b6b}
+  .chip.on{color:#031014;background:var(--cyan);border-color:var(--cyan);font-weight:600}
+  .chip.on.risk{background:var(--red);border-color:var(--red);color:#1a0509}
+
+  .era{margin:34px 0 10px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .era h2{font-size:19px;margin:0;letter-spacing:.4px}
+  .era .range{font-size:12.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+  .era .count{font-size:12px;color:#a5f3fc;background:rgba(8,47,58,.7);
+    border:1px solid rgba(34,211,238,.25);border-radius:999px;padding:1px 9px}
+
+  .timeline{position:relative;margin:0 0 8px;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(180deg,var(--cyan),rgba(139,92,246,.55),transparent)}
+  .item{position:relative;margin:0 0 14px}
+  .item::before{content:"";position:absolute;left:-24px;top:22px;width:9px;height:9px;border-radius:50%;
+    background:#061019;border:2px solid var(--cyan);box-shadow:0 0 12px rgba(34,211,238,.5)}
+  .item.risk::before{border-color:var(--red);box-shadow:0 0 12px rgba(251,113,133,.45)}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:14px;padding:16px 18px;transition:.18s}
+  .card:hover{border-color:#2b4b6b;transform:translateY(-1px)}
+  .card-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .date{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--dim)}
+  .cat{font-size:11px;border-radius:999px;padding:1px 8px;border:1px solid var(--line);color:#93c5fd}
+  .cat.风险{color:#fda4af;border-color:rgba(251,113,133,.35);background:rgba(251,113,133,.06)}
+  .cat.协议{color:#a5b4fc;border-color:rgba(129,140,248,.32)}
+  .cat.应用{color:#67e8f9;border-color:rgba(34,211,238,.30)}
+  .cat.标准{color:#fcd34d;border-color:rgba(251,191,36,.30)}
+  .cat.扩容{color:#86efac;border-color:rgba(52,211,153,.30)}
+  .card h3{font-size:16px;margin:8px 0 6px;letter-spacing:.2px}
+  .card p{margin:0;color:var(--muted);font-size:13.5px}
+  .impact{margin-top:9px;font-size:13px;color:#cbd5e1;border-left:2px solid rgba(34,211,238,.45);
+    padding-left:10px}
+  .impact b{color:var(--cyan);font-weight:600}
+  .card-foot{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px;font-size:12px}
+  .digest{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--dim)}
+  .empty{padding:30px;text-align:center;color:var(--dim);border:1px dashed var(--line);border-radius:14px}
+
+  section.block{background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px;margin-top:34px}
+  section.block h2{font-size:19px;margin:0 0 6px}
+  section.block .sub{color:var(--dim);font-size:13px;margin:0 0 18px}
+  .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:22px}
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+  .field label{font-size:12px;color:var(--muted)}
+  .field input,.field textarea{background:#080f1b;border:1px solid var(--line);border-radius:9px;
+    padding:9px 11px;color:var(--text);font-size:13px;font-family:inherit;outline:0}
+  .field input:focus,.field textarea:focus{border-color:#2b6f8a}
+  .field textarea{resize:vertical;min-height:64px}
+  .btn{background:var(--cyan);color:#031014;border:0;border-radius:9px;padding:9px 16px;
+    font-size:13px;font-weight:700;cursor:pointer}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:#0a1422;color:#bae6fd;border:1px solid #1e4c6b;font-weight:500}
+  .out{white-space:pre-wrap;background:#060c16;border:1px solid var(--line);border-radius:10px;
+    padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;
+    color:#a5f3fc;min-height:150px;margin-top:10px}
+  .kv{display:grid;gap:9px;font-size:13px}
+  .kv .row{display:flex;gap:12px;justify-content:space-between;border-bottom:1px solid #172033;padding-bottom:8px}
+  .kv .row span:first-child{color:var(--dim);flex:0 0 auto}
+  .kv .row code{color:#bae6fd;font-family:ui-monospace,Menlo,monospace;font-size:12px;
+    overflow-wrap:anywhere;text-align:right}
+  .status{display:inline-flex;align-items:center;gap:7px;font-size:12px;border-radius:999px;
+    padding:3px 10px;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.07);color:#fcd34d}
+  .status i{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  .status.ok{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.08);color:#6ee7b7}
+  .status.ok i{background:var(--green)}
+  .note{font-size:12.5px;color:var(--muted);margin-top:12px}
+  .note.warn{border-left:2px solid var(--gold);padding-left:10px;color:#e7d9a8}
+  ul.plain{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13px}
+  ul.plain li{margin:4px 0}
+  footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--dim);font-size:12px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  @media(max-width:760px){
+    h1{font-size:30px}
+    .hero-logo{width:96px;height:96px;border-radius:22px}
+    .grid2{grid-template-columns:1fr}
+    nav .links{display:none}
+    .wrap{padding:0 16px 64px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <img src="01_logo.png" alt="01">
+    <div class="brand">01 <span>进化档案馆</span></div>
+    <div class="links">
+      <a href="#timeline">时间轴</a>
+      <a href="#submit">提交记录</a>
+      <a href="#rewards">贡献奖励</a>
+      <a href="#attest">链上存证</a>
+      <a href="#about">关于 01</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <img class="hero-logo" src="01_logo.png" alt="01 Evolution">
+    <div class="hero-copy">
+      <div class="kicker"><i></i> COMMUNITY-BUILT · ON-CHAIN ANCHORED</div>
+      <h1>区块链不是一夜长成的，<br>它是一连串 <em>01</em> 的进化。</h1>
+      <p class="lead">这里收录区块链史上的关键进化节点：协议升级、应用爆发、标准定稿，也包括失败与崩塌。
+        每条记录由社区提交、纠错；30 条记录的 SHA-256 指纹已通过 Merkle 根在 Polygon 一次性存证。</p>
+      <div class="stats">
+        <div class="stat"><b id="statRecords">30</b><span>条进化记录</span></div>
+        <div class="stat"><b id="statEras">5</b><span>个时代</span></div>
+        <div class="stat"><b>SHA-256</b><span>记录指纹</span></div>
+        <div class="stat"><b>Polygon</b><span>存证网络</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar" id="timeline">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" placeholder="搜索事件、协议、关键词…" autocomplete="off">
+    </div>
+    <div class="chips" id="eraChips"></div>
+    <div class="chips" id="catChips"></div>
+  </div>
+
+  <div id="list"></div>
+
+  <section class="block" id="submit">
+    <h2>提交 / 纠错</h2>
+    <p class="sub">档案由社区共建。填写后复制模板，在社群提交；审核通过后统一上链存证，贡献者记入档案贡献榜。</p>
+    <div class="grid2">
+      <div>
+        <div class="field"><label>日期（YYYY-MM-DD）</label><input id="fDate" placeholder="2026-11-23"></div>
+        <div class="field"><label>事件标题</label><input id="fTitle" placeholder="一句话概括这次进化"></div>
+        <div class="field"><label>来源链接（可选）</label><input id="fSource" placeholder="https://…"></div>
+        <div class="field"><label>事实描述</label><textarea id="fSummary" placeholder="发生了什么，尽量给出可核验的事实"></textarea></div>
+        <div class="field"><label>进化意义</label><textarea id="fImpact" placeholder="它改变了什么"></textarea></div>
+        <button class="btn" id="genBtn">生成提交模板</button>
+        <button class="btn ghost" id="copyBtn" style="margin-left:8px">复制</button>
+      </div>
+      <div>
+        <div class="out" id="out">填写左侧内容后点击「生成提交模板」。</div>
+        <p class="note">模板包含事件字段与规范化 JSON。审核通过后，档案会对该 JSON 计算 SHA-256 指纹并写入存证合约；
+          任何人都可以用相同的 JSON 重新计算指纹来核验内容未被篡改。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="attest">
+    <h2>链上存证</h2>
+    <p class="sub">档案内容留在链下，链上保存 30 条记录的 Merkle 根。一次存证即可完整承诺全部记录，任意一条都可用证明独立核验。</p>
+    <div class="grid2">
+      <div class="kv">
+        <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0xb5f365df38247cb0d49e5e5d3237ed597019e5d9" target="_blank" rel="noopener">0xb5f365df38247cb0d49e5e5d3237ed597019e5d9</a></code></div>
+        <div class="row"><span>部署状态</span><span class="status ok"><i></i>已部署 · Polygon</span></div>
+        <div class="row"><span>覆盖记录</span><code>30 / 30 条（recordCount = 1）</code></div>
+        <div class="row"><span>Merkle 根</span><code>0xbdff8289ef60fb345a8109b2151aa7adf2d445ecc83d03c38906c98e1c73b905</code></div>
+        <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0x019726d029721d482c198f7ba0180fee2fc9cc278d772b1d53ce282b35a2d7c3" target="_blank" rel="noopener">0x019726d0…2d7c3</a></code></div>
+        <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0x97577d10391c2b3702bcc148833e1cd3ce78bd035aeb354ebcd6b557e26e696a" target="_blank" rel="noopener">0x97577d10…e696a</a></code></div>
+        <div class="row"><span>owner</span><code>0x8AF1…666666（团队地址）</code></div>
+        <div class="row"><span>指纹算法</span><code>SHA-256 叶子 + Merkle(sorted-pair)</code></div>
+        <div class="row"><span>存证网络</span><code>Polygon PoS</code></div>
+        <div class="row"><span>核验脚本</span><code>contracts/verify_merkle.py</code></div>
+      </div>
+      <div>
+        <p class="note">设计原则：</p>
+        <ul class="plain">
+          <li>链上只存 32 字节 Merkle 根与方案标识，不存全文，避免 gas 浪费。</li>
+          <li>30 条记录一次性承诺；每条记录都有独立 Merkle 证明，见 contracts/merkle.json。</li>
+          <li>发布权归档案馆 owner，防止垃圾记录；记录保留发布者与时间。</li>
+          <li>任何人都能离线重算指纹与根，并用 verify_merkle.py 与链上记录比对。</li>
+          <li>合约地址、owner 与两笔交易均可在 Polygonscan 核验，不伪造任何记录。</li>
+        </ul>
+        <p class="note warn">合约部署实付 0.163149 POL；Merkle 根存证实付 0.050932 POL。逐条单独上链的成本约为该方案的 30 倍，当前余额不足，因此采用一次性承诺。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="rewards">
+    <h2>贡献奖励</h2>
+    <p class="sub">第一季贡献积分计划：完成任务、登记、复核、累计积分。所有任务免费参与，不要求购买任何东西。</p>
+    <div class="grid2">
+      <div class="kv">
+        <div class="row"><span>兑换池</span><code>50 亿份（固定总量的 5%）</code></div>
+        <div class="row"><span>参与费用</span><code>0（链上兑换时自付 gas）</code></div>
+        <div class="row"><span>计分方式</span><code>基础分 × 质量系数 0.5–1.5</code></div>
+        <div class="row"><span>每周上限</span><code>2,000 分（开发/安全/设计除外）</code></div>
+        <div class="row"><span>个人上限</span><code>5,000 万份（兑换池的 1%）</code></div>
+        <div class="row"><span>完整规则</span><code><a href="POINTS.md">POINTS.md</a></code></div>
+      </div>
+      <div>
+        <p class="note">任务类别：内容创作、传播互动、邀请、开发/设计/文档、社区管理。</p>
+        <p class="note">执行流程：</p>
+        <ul class="plain">
+          <li>在 GitHub 提交「贡献登记」Issue，附作品链接和账号。</li>
+          <li>两名复核人独立评分，取平均质量系数。</li>
+          <li>记入贡献台账，每周公示积分榜。</li>
+          <li>季末快照、公示 7 天，生成 Merkle 名单。</li>
+          <li>兑换由参与者自行发起并支付 gas，不承诺具体日期。</li>
+        </ul>
+        <p style="margin-top:14px">
+          <a class="btn" href="https://github.com/01First/01-evolution-archive/issues/new?template=contribution.yml" target="_blank" rel="noopener">登记贡献</a>
+          <a class="btn ghost" href="POINTS.md" style="margin-left:8px">查看完整规则</a>
+        </p>
+        <p class="note warn">积分只记录贡献，不可转让、不构成收益承诺；奖励来自团队预留份额，不新增发行、不动池子。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <h2>关于 01</h2>
+    <p class="sub">01 / 进化币：把“区块链的进化”做成一个可被引用、可被核验的公共档案。</p>
+    <div class="grid2">
+      <div class="kv">
+        <div class="row"><span>代币名称</span><code>01 Evolution（进化币）</code></div>
+        <div class="row"><span>总供应</span><code>1000 亿枚（固定，无 mint）</code></div>
+        <div class="row"><span>代币合约</span><code>0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</code></div>
+        <div class="row"><span>DEX 交易对</span><code>0x0b202ad83212b460bc2b26913b3727662383575b</code></div>
+        <div class="row"><span>网络</span><code>Polygon PoS</code></div>
+      </div>
+      <div>
+        <p class="note">档案馆与代币的关系：</p>
+        <ul class="plain">
+          <li>贡献奖励来自团队预留份额，不新增发行、不动池子流动性。</li>
+          <li>档案不承诺收益、不募资，仅为公开内容与链上存证。</li>
+          <li>所有记录附来源链接；无法核验的内容不收。</li>
+          <li>失败与崩塌同样记录——进化史不只由成功构成。</li>
+        </ul>
+        <p class="note">合约地址：
+          <a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">代币</a>
+          ·
+          <a href="https://polygonscan.com/address/0x0b202ad83212b460bc2b26913b3727662383575b" target="_blank" rel="noopener">交易对</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>01 Evolution Archive · 社区共建 · 链上存证</div>
+    <div class="mono">records: <span id="footCount">30</span> · digest: sha256 · chain: polygon</div>
+  </footer>
+</div>
+
+<script>
+const RECORDS = [{"id":1,"date":"2008-10-31","era":"创世","cat":"协议","title":"比特币白皮书发布","summary":"Satoshi Nakamoto 在密码学邮件列表发布 9 页白皮书，首次提出无需可信第三方的去中心化电子现金方案。","impact":"区块链的“0”：此后所有链都在回答同一组问题。","source":"https://bitcoin.org/bitcoin.pdf","digest":"a5ec21749e67d28362602e7267492f5c5556bd07e554e5fa248f8a05058e89c8"},{"id":2,"date":"2009-01-03","era":"创世","cat":"协议","title":"比特币创世区块","summary":"区块 0 被挖出，创世交易中写入了当天《泰晤士报》头版标题；1 月 9 日发布 0.1 客户端。","impact":"第一个可运行的链，工作量证明从论文走进现实。","source":"https://mempool.space/block/0","digest":"dc9d86496de3fc501ac964b675cd3d1a02eac2649cabb3dd2efe726ff3022894"},{"id":3,"date":"2010-05-22","era":"创世","cat":"应用","title":"比特币披萨日","summary":"有人用 10,000 BTC 换了两张披萨，这是最早有记录的比特币实物交易。","impact":"代币第一次有了价格锚，也第一次证明它能交换现实商品。","source":"https://bitcointalk.org/index.php?topic=137.0","digest":"f6509d9eb604518465bfdcee5b1b663bfaf4e1ff717639bcae66efe742a6c990"},{"id":4,"date":"2013-11-27","era":"智能合约","cat":"协议","title":"以太坊白皮书发布","summary":"Vitalik Buterin 发布白皮书，提出图灵完备的智能合约平台与账户模型。","impact":"从“记账”走向“可编程”，链开始承载逻辑而不只是余额。","source":"https://ethereum.org/en/whitepaper/","digest":"52ef94cf42c5b1d0948903fe1292e146a2f2b5522c83cb1a8544be7b79482eb9"},{"id":5,"date":"2015-07-30","era":"智能合约","cat":"协议","title":"以太坊 Frontier 上线","summary":"以太坊主网 Frontier 发布，智能合约首次进入生产环境。","impact":"DApp 时代的起点，合约开发者生态开始形成。","source":"https://blog.ethereum.org/2015/07/30/ethereum-launches","digest":"60552d2d50b13326ff201cf5b6ee26ae2c84c3036472905e10b1bfbd092003bc"},{"id":6,"date":"2016-06-17","era":"智能合约","cat":"风险","title":"The DAO 被攻击","summary":"重入漏洞导致约 360 万 ETH 被转移，引发社区对回滚的激烈争论。","impact":"安全审计与形式化验证从此成为合约上线的刚需。","source":"https://blog.ethereum.org/2016/06/17/critical-update-re-dao-vulnerability/","digest":"464a3982d85ce30dc2a0e4eb8709b307b4a59085cb741af324c4f001b11791f3"},{"id":7,"date":"2016-07-20","era":"智能合约","cat":"协议","title":"DAO 硬分叉","summary":"以太坊硬分叉找回被盗资金，坚持原链的一方形成 Ethereum Classic。","impact":"代码治理与社区治理第一次正面冲突，分叉成为链上政治的常规选项。","source":"https://ethereum.org/en/history/","digest":"d11e03c02b986358d43ceff3504e8f58e96265c7549254cb44653c3ca890db00"},{"id":8,"date":"2016-10-28","era":"智能合约","cat":"标准","title":"Zcash 上线","summary":"首个主流 zk-SNARK 隐私链启动，提供可选屏蔽交易。","impact":"零知识证明从论文走向主网，隐私与可验证性开始结合。","source":"https://z.cash/","digest":"f7fbf4f303b679f6ec177eeb5cf947894c8c75600bc77287a0a56f4c6bec8ab4"},{"id":9,"date":"2017-08-01","era":"应用爆发","cat":"协议","title":"SegWit 激活","summary":"比特币隔离见证正式激活，同日 Bitcoin Cash 分叉。","impact":"扩容路线分歧公开化，链的分裂第一次以“路线”而非“事故”出现。","source":"https://en.bitcoin.it/wiki/Segregated_Witness","digest":"b5c328eaaf6b40ae82dfa99d7433558dc4ab9ea30a0a4520b98e29596b3d3f1b"},{"id":10,"date":"2017-11-28","era":"应用爆发","cat":"应用","title":"CryptoKitties 拥堵","summary":"链上养猫游戏爆红，大量交易让以太坊内存池严重积压。","impact":"首次证明链上应用可以挤爆主网，扩容从理论问题变成用户体验问题。","source":"https://www.cryptokitties.co/","digest":"f32e86df9bc6ac9e36ce4b3f4af81dd1b3edd2fd72431f751017a259dcb6cd3a"},{"id":11,"date":"2018-01-24","era":"应用爆发","cat":"标准","title":"ERC-721 定稿","summary":"非同质化代币标准定稿，为每个 Token ID 提供独立所有权接口。","impact":"为 NFT 提供统一接口，数字唯一性成为可组合的公共标准。","source":"https://eips.ethereum.org/EIPS/eip-721","digest":"adb4d4cf595142ac730722ace4a552be8ec12e8b87d686bd031845c0c94979ad"},{"id":12,"date":"2018-03-15","era":"应用爆发","cat":"扩容","title":"闪电网络 Beta","summary":"lnd 0.4-beta 支持比特币主网，支付通道进入可用阶段。","impact":"链下支付从实验走向可用，为“主网结算 + 二层支付”提供样本。","source":"https://lightning.engineering/","digest":"cb0476a2be0000270e28225d05e006d182ef1a18b50696e0374121ceda192d45"},{"id":13,"date":"2019-02-28","era":"应用爆发","cat":"协议","title":"君士坦丁堡升级","summary":"以太坊引入 CREATE2、extcodehash 等改动，优化合约部署与 gas 成本。","impact":"为合约间组合、状态通道与更复杂的链上交互铺路。","source":"https://ethereum.org/en/history/","digest":"a7446cd713fedbd7bd753e690a877cb6c427239d739e7cd1cf52a5b31658559b"},{"id":14,"date":"2020-06-15","era":"扩容竞赛","cat":"应用","title":"DeFi Summer 开启","summary":"Compound 启动 COMP 流动性挖矿，资金大规模涌入链上借贷与交易。","impact":"协议代币与激励成为增长引擎，链上 TVL 成为新的竞争指标。","source":"https://compound.finance/","digest":"cc104f61be488a0bac1be3ac1a0abceed19f1a50366a08352bc3e58c6f179410"},{"id":15,"date":"2020-09-16","era":"扩容竞赛","cat":"应用","title":"Uniswap 发行 UNI","summary":"Uniswap 向历史用户空投 4 亿枚 UNI，并开启流动性挖矿。","impact":"空投成为用户获取的标准动作，DEX 开始用代币争夺流动性。","source":"https://uniswap.org/blog/uni","digest":"1d4b1d5aeae3bcc1a752be409e23ab1a38a26545c05a32592fb61b0627be7094"},{"id":16,"date":"2020-10","era":"扩容竞赛","cat":"应用","title":"QuickSwap 上线 Polygon","summary":"Polygon 上首个主流 V2 DEX 上线，提供低费用的现货兑换与流动性池。","impact":"低成本侧链开始承接以太坊外溢的流动性与用户。","source":"https://quickswap.exchange/","digest":"41046d099f91aae3f12922aa969a0466fea91bf1bcf1e202d655a535ae775a58"},{"id":17,"date":"2020-12-01","era":"扩容竞赛","cat":"协议","title":"信标链创世","summary":"以太坊 PoS 信标链启动，与 PoW 主网并行运行。","impact":"从 PoW 向 PoS 迁移的第一步，共识层的“平行世界”开始计时。","source":"https://ethereum.org/en/history/","digest":"f7f50a28e4e624efbf8f4888c9c0024101604849388259c85c414d37d6b05322"},{"id":18,"date":"2021-02-09","era":"扩容竞赛","cat":"协议","title":"Polygon 品牌升级","summary":"Matic Network 更名为 Polygon，从单链项目转向多链扩容生态。","impact":"单链项目转向生态矩阵，侧链、PoS 与后续 L2 被纳入同一叙事。","source":"https://polygon.technology/","digest":"30b2bfd9f75ce098c2830f7f3f1823e34ae91605ee8d30c1d70d3735a3293808"},{"id":19,"date":"2021-03-11","era":"扩容竞赛","cat":"应用","title":"Beeple 数字艺术品成交","summary":"Beeple 的《Everydays: The First 5000 Days》在佳士得拍出约 6900 万美元。","impact":"NFT 进入主流视野，链上唯一性获得传统拍卖市场定价。","source":"https://www.christies.com/","digest":"ba1b2421b59e648dc885f3f12e62c7fcbeca6ea73fbc1638c06fa41370eeb304"},{"id":20,"date":"2021-05-05","era":"扩容竞赛","cat":"应用","title":"Uniswap V3 上线","summary":"集中流动性让 LP 可以在自选价格区间内做市。","impact":"AMM 资本效率跃升，做市从“全区间”变成“策略”。","source":"https://uniswap.org/blog/uniswap-v3","digest":"228127effabfea95f0e962f055c1495d8197acbea0fab8a7da394a64cc274d5a"},{"id":21,"date":"2021-08-05","era":"扩容竞赛","cat":"协议","title":"伦敦升级与 EIP-1559","summary":"以太坊引入基础费销毁机制，重构交易费用市场。","impact":"ETH 首次进入通缩叙事，费用从“全部给矿工”变为“部分被销毁”。","source":"https://eips.ethereum.org/EIPS/eip-1559","digest":"8cf95d51a3ee84854b50cdfb91625674996a155d647a7bcf9f89742ceedbddf6"},{"id":22,"date":"2021-11-14","era":"模块化与合规","cat":"协议","title":"Taproot 激活","summary":"比特币激活 Schnorr 签名与更私密、更灵活的脚本能力。","impact":"比特币脚本十年来最大升级，复杂多签与隐私方案获得更好基础。","source":"https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki","digest":"e61731c38f1036327dc9736c0115b9a79b1a5f5f9967d00a7dbdb253cc7c860c"},{"id":23,"date":"2022-05-09","era":"模块化与合规","cat":"风险","title":"Terra / UST 崩盘","summary":"算法稳定币 UST 脱锚引发死亡螺旋，LUNA 与 UST 市值在数日内蒸发数百亿美元。","impact":"稳定币模型风险的教科书案例，“高收益锚定”被重新审视。","source":"https://en.wikipedia.org/wiki/Terra_(blockchain)","digest":"17c94135fa03e712df70912c28759ee6a793cb34fd7f8bff175e66ec996daff5"},{"id":24,"date":"2022-09-15","era":"模块化与合规","cat":"协议","title":"The Merge","summary":"以太坊主网与信标链合并，共识从 PoW 切换为 PoS，能耗下降约 99.95%。","impact":"PoS 正式接管主网，质押、验证者与共识经济成为基础设施。","source":"https://ethereum.org/en/roadmap/merge/","digest":"471ac7f2b2821a429aa117cb9f139e45bf1892a0e3b9aaded46a383a0ba43e2a"},{"id":25,"date":"2022-11-11","era":"模块化与合规","cat":"风险","title":"FTX 破产","summary":"交易所挪用客户资产曝光，引发行业性信任危机与挤兑。","impact":"CEX 托管风险被摆上台面，储备证明与自托管需求快速上升。","source":"https://en.wikipedia.org/wiki/FTX","digest":"962b86bd742149037ee23361ed091b70fb861388e371874c9e9ef635b5b0074c"},{"id":26,"date":"2023-03-01","era":"模块化与合规","cat":"标准","title":"ERC-4337 部署","summary":"账户抽象标准在主网部署，支持社交恢复、代付 gas 与批量操作。","impact":"钱包体验向 Web2 靠拢，私钥管理不再是唯一入口。","source":"https://eips.ethereum.org/EIPS/eip-4337","digest":"91efc9fae96b03f259d86fee567802b03cfec9be93f2052b7188341b88e8c210"},{"id":27,"date":"2023-03-23","era":"模块化与合规","cat":"应用","title":"Arbitrum 发行 ARB","summary":"Arbitrum 空投 ARB 并转向 DAO 治理，L2 开始用代币争夺生态。","impact":"L2 竞争从技术指标扩展到治理与用户激励。","source":"https://arbitrum.foundation/","digest":"070796bc1d2fc08909f5c3aa22fd2e99f0db4d2ffbb67a37e978e58aa5460a7b"},{"id":28,"date":"2023-04-12","era":"模块化与合规","cat":"协议","title":"Shapella 升级","summary":"以太坊开放质押提款，验证者可退出并取回质押 ETH。","impact":"质押资产形成完整闭环，质押率与流动性关系被重新定价。","source":"https://ethereum.org/en/history/","digest":"3294cbedf09a7a1ea285e16a4cc13021857501b46acce8a85cf29537969df07f"},{"id":29,"date":"2024-03-13","era":"模块化与合规","cat":"扩容","title":"Dencun 与 EIP-4844","summary":"以太坊引入 Blob 数据空间，L2 数据成本显著下降。","impact":"模块化扩容落地，L2 费用下降一个数量级，Rollup 进入低成本阶段。","source":"https://eips.ethereum.org/EIPS/eip-4844","digest":"394358c0b91fc7f8d95809db4df9fe65eaa828b4cb9e2138825fd84f3fb7e9a8"},{"id":30,"date":"2025-05-07","era":"模块化与合规","cat":"协议","title":"Pectra 升级","summary":"以太坊提升质押上限，推进账户抽象与 L2 数据能力。","impact":"主网与 L2 的协同继续深化，验证者与账户体验同时被改写。","source":"https://ethereum.org/en/history/","digest":"549fe1c5a42800877042e9dc878e451a569ef21c833c82304c28cbb71cdb7353"}];
+
+const ERA_ORDER = ["创世","智能合约","应用爆发","扩容竞赛","模块化与合规"];
+const ERA_RANGE = {"创世":"2008 – 2012","智能合约":"2013 – 2016","应用爆发":"2017 – 2019","扩容竞赛":"2020 – 2021","模块化与合规":"2022 – 2025"};
+let eraSel = "全部", catSel = "全部", kw = "";
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+function buildChips(){
+  const eras = ["全部"].concat(ERA_ORDER);
+  document.getElementById("eraChips").innerHTML = eras.map(e=>
+    `<div class="chip${e===eraSel?" on":""}" data-era="${esc(e)}">${esc(e)}</div>`).join("");
+  const cats = ["全部","协议","应用","标准","扩容","风险"];
+  document.getElementById("catChips").innerHTML = cats.map(c=>
+    `<div class="chip${c===catSel?" on":""}${c==="风险"?" risk":""}" data-cat="${esc(c)}">${esc(c)}</div>`).join("");
+}
+function filtered(){
+  return RECORDS.filter(r=>{
+    if(eraSel!=="全部" && r.era!==eraSel) return false;
+    if(catSel!=="全部" && r.cat!==catSel) return false;
+    if(kw){
+      const s=(r.title+" "+r.summary+" "+r.impact+" "+r.date+" "+r.cat+" "+r.era).toLowerCase();
+      if(!s.includes(kw)) return false;
+    }
+    return true;
+  });
+}
+function render(){
+  const rows = filtered();
+  document.getElementById("statRecords").textContent = RECORDS.length;
+  document.getElementById("footCount").textContent = RECORDS.length;
+  const host = document.getElementById("list");
+  if(!rows.length){ host.innerHTML = '<div class="empty">没有匹配的记录</div>'; return; }
+  const groups = {};
+  rows.forEach(r=>{(groups[r.era]=groups[r.era]||[]).push(r)});
+  let html = "";
+  ERA_ORDER.filter(e=>groups[e]).forEach(e=>{
+    const arr = groups[e];
+    html += `<div class="era"><h2>${esc(e)}</h2><span class="range">${ERA_RANGE[e]||""}</span><span class="count">${arr.length} 条</span></div>`;
+    html += '<div class="timeline">';
+    arr.forEach(r=>{
+      html += `<div class="item ${r.cat==="风险"?"risk":""}">
+  <div class="card">
+    <div class="card-top">
+      <span class="date">${esc(r.date)}</span>
+      <span class="cat ${esc(r.cat)}">${esc(r.cat)}</span>
+      <span class="date">#${String(r.id).padStart(2,"0")}</span>
+    </div>
+    <h3>${esc(r.title)}</h3>
+    <p>${esc(r.summary)}</p>
+    <div class="impact"><b>进化意义</b> · ${esc(r.impact)}</div>
+    <div class="card-foot">
+      <span class="digest" title="${esc(r.digest)}">指纹 ${esc(r.digest.slice(0,16))}…</span>
+      ${r.source?`<a href="${esc(r.source)}" target="_blank" rel="noopener">来源 ↗</a>`:""}
+    </div>
+  </div>
+</div>`;
+    });
+    html += '</div>';
+  });
+  host.innerHTML = html;
+}
+document.getElementById("eraChips").addEventListener("click",e=>{
+  const c=e.target.closest(".chip"); if(!c) return;
+  eraSel=c.dataset.era; buildChips(); render();
+});
+document.getElementById("catChips").addEventListener("click",e=>{
+  const c=e.target.closest(".chip"); if(!c) return;
+  catSel=c.dataset.cat; buildChips(); render();
+});
+document.getElementById("q").addEventListener("input",e=>{kw=e.target.value.trim().toLowerCase(); render();});
+
+function canon(o){
+  return JSON.stringify({date:o.date,title:o.title,summary:o.summary,impact:o.impact,source:o.source||"",cat:o.cat,era:o.era});
+}
+document.getElementById("genBtn").addEventListener("click",()=>{
+  const o={
+    date:document.getElementById("fDate").value.trim(),
+    title:document.getElementById("fTitle").value.trim(),
+    summary:document.getElementById("fSummary").value.trim(),
+    impact:document.getElementById("fImpact").value.trim(),
+    source:document.getElementById("fSource").value.trim(),
+    cat:"应用", era:"模块化与合规"
+  };
+  const txt =
+`【01 进化档案馆 · 提交模板】
+日期：${o.date||"（必填）"}
+标题：${o.title||"（必填）"}
+类别：${o.cat}（协议/应用/标准/扩容/风险）
+来源：${o.source||"（建议填写可核验链接）"}
+事实：${o.summary||"（必填）"}
+意义：${o.impact||"（必填）"}
+
+规范化 JSON（用于计算 SHA-256 指纹）：
+${canon(o)}`;
+  document.getElementById("out").textContent = txt;
+});
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+  const t=document.getElementById("out").textContent;
+  try{ await navigator.clipboard.writeText(t); document.getElementById("copyBtn").textContent="已复制"; }
+  catch(e){ document.getElementById("copyBtn").textContent="请手动复制"; }
+  setTimeout(()=>document.getElementById("copyBtn").textContent="复制",1200);
+});
+buildChips(); render();
+</script>
+</body>
+</html>
