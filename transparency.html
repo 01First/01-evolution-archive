@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>透明度 · 01 进化档案馆</title>
+<meta name="description" content="01 币与 01 进化档案馆的链上透明度页面：合约、LP、团队预留、奖励池与风险声明。">
+<style>
+  :root{
+    --bg:#05070c; --panel:#0b1220; --panel2:#0e1728; --line:#1e293b;
+    --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b;
+    --cyan:#22d3ee; --blue:#3b82f6; --violet:#8b5cf6; --gold:#fbbf24;
+    --green:#34d399; --red:#fb7185;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(900px 520px at 50% -12%, rgba(34,211,238,.10), transparent 62%),
+      radial-gradient(760px 420px at 88% 18%, rgba(139,92,246,.08), transparent 60%),
+      linear-gradient(rgba(30,41,59,.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,41,59,.16) 1px, transparent 1px);
+    background-size:auto,auto,44px 44px,44px 44px}
+  a{color:var(--cyan);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 22px 80px}
+  nav{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+  nav img{width:30px;height:30px;border-radius:8px}
+  nav .brand{font-weight:700;font-size:14px}
+  nav .brand span{color:var(--cyan)}
+  nav .back{margin-left:auto;font-size:13px;color:var(--muted)}
+  header{padding:42px 0 18px}
+  .kicker{display:inline-flex;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--cyan);border:1px solid rgba(34,211,238,.32);background:rgba(8,47,58,.5);
+    border-radius:999px;padding:4px 12px}
+  h1{font-size:32px;line-height:1.25;margin:14px 0 8px}
+  h1 em{font-style:normal;color:var(--cyan)}
+  .lead{color:var(--muted);font-size:14.5px;margin:0;max-width:680px}
+  .stamp{font-size:12px;color:var(--dim);margin-top:14px}
+  section{margin:30px 0}
+  h2{font-size:18px;margin:0 0 5px;letter-spacing:.3px}
+  .sub{font-size:13px;color:var(--dim);margin:0 0 12px}
+  .kv{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:14px;padding:6px 16px}
+  .row{display:flex;gap:18px;align-items:flex-start;justify-content:space-between;
+    padding:11px 0;border-bottom:1px solid rgba(30,41,59,.7);font-size:13.5px}
+  .row:last-child{border-bottom:0}
+  .row span{color:var(--muted);flex:0 0 auto}
+  .row code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    text-align:right;word-break:break-all;color:var(--text)}
+  .bad{color:var(--red)}
+  .ok{color:var(--green)}
+  .warnbox{border:1px solid rgba(251,113,133,.35);background:rgba(76,5,25,.22);
+    border-radius:14px;padding:14px 18px;font-size:13px;color:#fecdd3}
+  .warnbox b{color:#fda4af}
+  .note{font-size:12.5px;color:var(--dim);margin-top:9px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .card b{display:block;font-size:13px;margin-bottom:4px}
+  .card p{font-size:12.5px;color:var(--muted);margin:0}
+  footer{border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <img src="01_logo.png" alt="01">
+    <div class="brand">01 <span>进化档案馆</span></div>
+    <a class="back" href="index.html">← 返回档案馆</a>
+  </nav>
+
+  <header>
+    <div class="kicker">Transparency · 链上可核验</div>
+    <h1>透明度页：<em>只写链上事实</em></h1>
+    <p class="lead">本页只列可在 Polygonscan 独立核验的地址、余额与交易，不做资产背书、不承诺价格或收益。所有数字以页面标注的区块为准，变化后请以链上实时数据为准。</p>
+    <div class="stamp">最后核对：2026-11-23 · 区块 97,798,398</div>
+  </header>
+
+  <section>
+    <h2>01 代币</h2>
+    <p class="sub">固定总量，无增发入口，无交易税。</p>
+    <div class="kv">
+      <div class="row"><span>合约</span><code><a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</a></code></div>
+      <div class="row"><span>总供应</span><code>1000 亿枚（100,000,000,000）</code></div>
+      <div class="row"><span>精度 / 链</span><code>18 · Polygon PoS</code></div>
+      <div class="row"><span>增发</span><code class="ok">无 mint 入口</code></div>
+      <div class="row"><span>交易税</span><code class="ok">无</code></div>
+    </div>
+    <p class="note">核验方式：打开代币合约的 Read Contract，查看 totalSupply；在 Write Contract 中不存在 mint 方法。</p>
+  </section>
+
+  <section>
+    <h2>流动性</h2>
+    <p class="sub">QuickSwap V2 池，LP 代币 100% 位于销毁地址。</p>
+    <div class="kv">
+      <div class="row"><span>交易对</span><code><a href="https://polygonscan.com/address/0x0b202ad83212b460bc2b26913b3727662383575b" target="_blank" rel="noopener">0x0b202ad83212b460bc2b26913b3727662383575b</a></code></div>
+      <div class="row"><span>LP 总量</span><code>309,838.667697</code></div>
+      <div class="row"><span>0x…dEaD 持有</span><code class="ok">100.00%</code></div>
+      <div class="row"><span>团队 LP</span><code>0</code></div>
+      <div class="row"><span>466666 LP</span><code>0</code></div>
+    </div>
+    <p class="note">核验方式：打开交易对合约，读取 totalSupply 与 balanceOf(0x…dEaD)；LP 已全部销毁，团队无法撤出该池流动性。</p>
+  </section>
+
+  <section>
+    <h2>团队预留与锁仓</h2>
+    <p class="sub">200 亿枚已拆分：150 亿进入 48 个月线性锁仓，50 亿进入奖励多签。</p>
+    <div class="kv">
+      <div class="row"><span>锁仓合约</span><code><a href="https://polygonscan.com/address/0xe57461E12d93fd9dA2895FC99128329088C4B5B2" target="_blank" rel="noopener">0xe57461E12d93fd9dA2895FC99128329088C4B5B2</a></code></div>
+      <div class="row"><span>锁仓数量</span><code>150.00 亿枚</code></div>
+      <div class="row"><span>受益人 Safe A</span><code><a href="https://polygonscan.com/address/0xC2f9338e30bD009BB8fa4e780d4489e49A88500E" target="_blank" rel="noopener">0xC2f9338e30bD009BB8fa4e780d4489e49A88500E</a></code></div>
+      <div class="row"><span>解锁方式</span><code>48 个月线性 · 2026-11-23 → 2030-11-22（UTC）</code></div>
+      <div class="row"><span>当前团队 EOA</span><code>0x8AF1…666666 · 0 枚（已全部转出）</code></div>
+    </div>
+    <p class="note">核验：锁仓合约 owner() 为 Safe A，start() 为 1795403022，duration() 为 126144000 秒，代币余额 150 亿；释放按秒线性进行，任何人可调用 release(token)，代币只会进入受益人 Safe A。</p>
+  </section>
+
+  <section>
+    <h2>多签配置</h2>
+    <p class="sub">两个 Safe 均为 2/3，单签无法移动资金。</p>
+    <div class="kv">
+      <div class="row"><span>Safe A（锁仓受益人）</span><code><a href="https://polygonscan.com/address/0xC2f9338e30bD009BB8fa4e780d4489e49A88500E" target="_blank" rel="noopener">0xC2f9…500E</a> · 2/3</code></div>
+      <div class="row"><span>Safe B（奖励池）</span><code><a href="https://polygonscan.com/address/0x0914120572fE015Bea35339931ac30b8A5eebF4D" target="_blank" rel="noopener">0x0914…bF4D</a> · 2/3</code></div>
+      <div class="row"><span>签名人 1</span><code>团队 0x8AF1…666666</code></div>
+      <div class="row"><span>签名人 2</span><code>0xfA28…466666</code></div>
+      <div class="row"><span>签名人 3（备份）</span><code>0x06CA…7cE5</code></div>
+      <div class="row"><span>阈值</span><code>2 / 3</code></div>
+    </div>
+    <p class="note">备份签名人的私钥需要离线保存；两个签名人合作即可执行，任何单签都不能单独移动资金。</p>
+  </section>
+
+  <section>
+    <h2>第一季奖励</h2>
+    <p class="sub">50 亿枚预算，分 7 个 Merkle 根发放；当前未注资、未发布名单。</p>
+    <div class="kv">
+      <div class="row"><span>发奖合约</span><code><a href="https://polygonscan.com/address/0x781b218941d59ca613b292baff5b2c5638309d50" target="_blank" rel="noopener">0x781b218941d59ca613b292baff5b2c5638309d50</a></code></div>
+      <div class="row"><span>奖励池 Safe B</span><code><a href="https://polygonscan.com/address/0x0914120572fE015Bea35339931ac30b8A5eebF4D" target="_blank" rel="noopener">0x0914…bF4D</a> · 50 亿枚 · 2/3</code></div>
+      <div class="row"><span>合约 owner</span><code>奖励池 Safe B（2/3 多签）</code></div>
+      <div class="row"><span>绑定代币</span><code>01 0x095d…f1b7</code></div>
+      <div class="row"><span>合约内 01 余额</span><code>0</code></div>
+      <div class="row"><span>已发布季数</span><code>0</code></div>
+      <div class="row"><span>预算结构</span><code>首次 10 亿 + 6 × 约 6.667 亿</code></div>
+    </div>
+    <p class="note">任何注资与发奖都需要团队地址主动调用 approve + publishSeason，并在站点提前公示名单与 Merkle 根；不会自动发币。</p>
+  </section>
+
+  <section>
+    <h2>档案馆存证</h2>
+    <p class="sub">30 条记录的 Merkle 根已写入 Polygon，任何人可离线复核。</p>
+    <div class="kv">
+      <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0xb5f365df38247cb0d49e5e5d3237ed597019e5d9" target="_blank" rel="noopener">0xb5f365df38247cb0d49e5e5d3237ed597019e5d9</a></code></div>
+      <div class="row"><span>Merkle 根</span><code>0xbdff8289…73b905</code></div>
+      <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0x019726d029721d482c198f7ba0180fee2fc9cc278d772b1d53ce282b35a2d7c3" target="_blank" rel="noopener">0x019726d0…2d7c3</a></code></div>
+      <div class="row"><span>覆盖</span><code>30 / 30 条</code></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>风险与声明</h2>
+    <div class="warnbox">
+      <b>没有资产背书，没有收益承诺。</b> 01 是社区实验型代币，不存在“域名背书 1 亿美金”或任何等价资产抵押；不承诺回购、保本、分红或价格上涨。团队 150 亿枚已进入 48 个月线性锁仓，50 亿枚奖励池由 2/3 多签持有；这提高可核验性，但不构成资产背书或收益承诺。代币价格可能归零，流动性极低，请勿投入无法承受损失的资金。
+      <br><br>
+      本页面不构成投资建议、要约或募集行为；在受限制的司法辖区不面向当地居民。贡献奖励由团队预留份额酌情发放，规则可能调整，任何发放均需链上公示。
+    </div>
+  </section>
+
+  <section>
+    <h2>独立核验清单</h2>
+    <div class="grid">
+      <div class="card"><b>1. 代币总量</b><p>打开代币合约 Read → totalSupply，应为 1000 亿 × 10^18。</p></div>
+      <div class="card"><b>2. LP 销毁</b><p>打开交易对合约 → totalSupply，再查 balanceOf(0x…dEaD)，应为 100%。</p></div>
+      <div class="card"><b>3. 团队份额</b><p>查代币 balanceOf(0x8AF1…666666)，当前应为 200 亿。</p></div>
+      <div class="card"><b>4. 奖励合约</b><p>查 owner()、token()、seasonCount()，当前 owner 为团队、seasonCount 为 0。</p></div>
+    </div>
+  </section>
+
+  <footer>
+    01 Evolution Archive · 透明度页 · 所有地址与交易均可在 Polygonscan 核验 · 本页不构成投资建议
+  </footer>
+</div>
+</body>
+</html>

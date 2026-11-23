@@ -1,6 +1,16 @@
 {
   "season": 1,
-  "updated": "2026-11-23",
+  "status": "active",
+  "start": "2026-11-23",
+  "end": "2026-12-20",
+  "snapshot_at": "2026-12-20T23:59:00Z",
   "pool": 5000000000,
+  "reward_contract": "0x781b218941d59ca613b292baff5b2c5638309d50",
+  "reward_safe": "0x0914120572fE015Bea35339931ac30b8A5eebF4D",
+  "reward_safe_threshold": "2/3",
+  "team_lock": "0xe57461E12d93fd9dA2895FC99128329088C4B5B2",
+  "team_lock_beneficiary": "0xC2f9338e30bD009BB8fa4e780d4489e49A88500E",
+  "team_lock_months": 48,
+  "updated": "2026-11-23",
   "entries": []
 }
