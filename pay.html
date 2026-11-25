@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>服务付款 · 01</title>
+<link rel="icon" href="01_logo.png">
+<style>
+  :root{
+    --bg:#05070c; --panel:#0b1220; --panel2:#0e1728; --line:#1e293b;
+    --text:#e2e8f0; --muted:#94a3b8; --dim:#64748b;
+    --cyan:#22d3ee; --green:#34d399; --red:#fb7185; --gold:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:
+      radial-gradient(800px 460px at 50% -10%, rgba(34,211,238,.10), transparent 62%),
+      linear-gradient(rgba(30,41,59,.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,41,59,.14) 1px, transparent 1px);
+    background-size:auto,44px 44px,44px 44px}
+  .wrap{position:relative;max-width:640px;margin:0 auto;padding:28px 20px 70px}
+  nav{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  nav img{width:30px;height:30px;border-radius:8px}
+  nav b{font-size:14px}
+  nav b span{color:var(--cyan)}
+  nav a{margin-left:auto;font-size:12.5px;color:var(--muted);text-decoration:none}
+  h1{font-size:24px;margin:24px 0 6px}
+  .lead{font-size:13px;color:var(--muted);margin:0 0 18px}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:16px;padding:18px;margin:14px 0}
+  .kv{display:grid;gap:9px;font-size:13px}
+  .row{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;
+    padding-bottom:8px;border-bottom:1px solid #172033}
+  .row:last-child{border-bottom:0;padding-bottom:0}
+  .row span{color:var(--dim);flex:0 0 auto}
+  .row code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+    text-align:right;word-break:break-all;color:#bae6fd}
+  .amount{font-size:28px;font-weight:700;letter-spacing:.4px;margin:2px 0 10px}
+  .amount small{font-size:13px;color:var(--dim);font-weight:400}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  input,textarea{width:100%;background:#080f1b;border:1px solid var(--line);border-radius:9px;
+    padding:9px 11px;color:var(--text);font-size:13px;font-family:inherit;outline:0}
+  input:focus,textarea:focus{border-color:#2b6f8a}
+  textarea{min-height:58px;resize:vertical}
+  .btn{width:100%;background:var(--cyan);color:#031014;border:0;border-radius:10px;
+    padding:12px 16px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  .btn.ghost{background:#0a1422;color:#bae6fd;border:1px solid #1e4c6b;font-weight:500}
+  .status{font-size:13px;margin-top:12px;color:#bae6fd;min-height:20px;word-break:break-all}
+  .status.err{color:var(--red)}
+  .status.ok{color:var(--green)}
+  .warn{border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.07);
+    border-radius:12px;padding:11px 14px;font-size:12.5px;color:#fde68a;margin:14px 0}
+  .danger{border:1px solid rgba(251,113,133,.35);background:rgba(76,5,25,.22);
+    border-radius:12px;padding:11px 14px;font-size:12.5px;color:#fecdd3;margin:14px 0}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .copy{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:7px;
+    padding:3px 8px;font-size:11.5px;cursor:pointer;margin-left:6px}
+  .copy:hover{color:var(--cyan);border-color:#2b6b80}
+  .hidden{display:none}
+  footer{margin-top:24px;font-size:11.5px;color:var(--dim);text-align:center}
+  a{color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <img src="01_logo.png" alt="01">
+    <b>01 <span>服务机构</span></b>
+    <a href="services.html">服务说明</a>
+  </nav>
+
+  <h1>服务付款</h1>
+  <p class="lead">本页只处理报价单中的单笔付款。请先核对 invoiceId 与金额，再连接钱包。</p>
+
+  <div id="invalid" class="danger hidden">
+    付款链接无效或缺少参数。请使用报价单中附带的付款链接，不要自行拼接。
+    <div style="margin-top:8px"><a href="services.html">返回服务说明</a></div>
+  </div>
+
+  <div id="payui" class="hidden">
+    <div class="card">
+      <div class="amount"><span id="amt">-</span> <small id="tok">-</small></div>
+      <div class="kv">
+        <div class="row"><span>invoiceId</span><code id="inv">-</code></div>
+        <div class="row"><span>服务</span><code id="svc">-</code></div>
+        <div class="row"><span>收款合约</span><code>0xbe77D7f26E1095A12f0542DC2a4814F4344B2441</code></div>
+        <div class="row"><span>金库</span><code>0x39C3…0101 · 3/5 Safe</code></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">开票信息（可选）</div>
+      <p style="font-size:12px;color:var(--dim);margin:0 0 6px">只保存在你的浏览器里，不会上传。付款成功后可复制或下载回执，自行发送给 01。</p>
+      <label for="company">公司 / 机构名称</label>
+      <input id="company" placeholder="例如：Acme Labs Ltd.">
+      <label for="email">联系邮箱</label>
+      <input id="email" type="email" placeholder="finance@example.com">
+      <label for="memo">备注（可选）</label>
+      <textarea id="memo" placeholder="合同编号、项目名等"></textarea>
+    </div>
+
+    <button id="paybtn" class="btn" disabled>连接钱包并支付</button>
+    <div id="status" class="status"></div>
+
+    <div id="manual" class="card hidden">
+      <div style="font-size:13.5px;font-weight:600;margin-bottom:6px">手动付款</div>
+      <p style="font-size:12px;color:var(--dim);margin:0 0 10px">如果你的钱包不支持网页连接，可复制以下参数在钱包中手动调用。需要先 approve 收款合约，再调用 pay。</p>
+      <div class="kv">
+        <div class="row"><span>代币合约</span><code id="tokaddr">-</code></div>
+        <div class="row"><span>金额最小单位</span><code id="units">-</code></div>
+        <div class="row"><span>invoiceId bytes32</span><code id="inv32">-</code></div>
+        <div class="row"><span>pay calldata</span><code id="paydata">-</code></div>
+      </div>
+      <button class="btn ghost" id="copybtn" style="margin-top:12px">复制付款参数</button>
+    </div>
+
+    <div id="receipt" class="card hidden">
+      <div style="font-size:13.5px;font-weight:600;margin-bottom:6px">付款回执</div>
+      <div class="kv">
+        <div class="row"><span>交易哈希</span><code id="txh">-</code></div>
+        <div class="row"><span>付款地址</span><code id="payer">-</code></div>
+        <div class="row"><span>状态</span><code class="ok">已上链</code></div>
+      </div>
+      <button class="btn ghost" id="dlbtn" style="margin-top:12px">下载回执（txt）</button>
+    </div>
+
+    <div class="warn">
+      付款前请确认浏览器地址是 <span class="mono">01first.github.io/01-evolution-archive/pay.html</span>，
+      合约是 <span class="mono">0xbe77…2441</span>。任何其他域名或地址都可能是钓鱼。
+    </div>
+    <div class="danger">
+      本页不托管资金，也不收取额外费用。链上交易不可撤销；付款前请自行核对金额与 invoiceId。
+    </div>
+  </div>
+
+  <footer>01 Institutional Services · Polygon · USDT / USDC / USDC.e</footer>
+</div>
+
+<script>
+(function(){
+  const ROUTER = '0xbe77D7f26E1095A12f0542DC2a4814F4344B2441';
+  const TREASURY = '0x39C3730c1a5C42e763a8DEEA968a8A3D01010101';
+  const CHAIN_ID = '0x89';
+  const PAY_SEL = '0x5e5571ac';
+  const APPROVE_SEL = '0x095ea7b3';
+  const ALLOWANCE_SEL = '0xdd62ed3e';
+  const TOKENS = {
+    'USDC':   {addr:'0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', dec:6},
+    'USDT':   {addr:'0xc2132D05D31c914a87C6611C10748AEb04B58e8F', dec:6},
+    'USDC.E': {addr:'0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', dec:6}
+  };
+  const SERVICES = {archive:'档案托管', forensics:'链上取证报告', audit:'安全配置认证'};
+
+  const $ = id => document.getElementById(id);
+  const qs = new URLSearchParams(location.search);
+  const invoice = (qs.get('invoice') || '').trim().toUpperCase();
+  const amountStr = (qs.get('amount') || '').trim();
+  const tokenKey = (qs.get('token') || 'USDC').trim().toUpperCase();
+  const service = (qs.get('service') || '').trim().toLowerCase();
+
+  function padAddr(a){ return a.toLowerCase().replace(/^0x/,'').padStart(64,'0'); }
+  function padUint(v){ return BigInt(v).toString(16).padStart(64,'0'); }
+  function strToBytes32(s){
+    let hex = '';
+    for (const ch of s) {
+      const c = ch.charCodeAt(0);
+      if (c > 127) throw new Error('invoiceId 只能包含 ASCII 字符');
+      hex += c.toString(16).padStart(2,'0');
+    }
+    if (hex.length > 64) throw new Error('invoiceId 超过 32 字节');
+    return hex.padEnd(64,'0');
+  }
+  function payData(token, units, inv){
+    return PAY_SEL + padAddr(token) + padUint(units) + strToBytes32(inv);
+  }
+  function approveData(spender, units){
+    return APPROVE_SEL + padAddr(spender) + padUint(units);
+  }
+  function allowanceData(owner, spender){
+    return ALLOWANCE_SEL + padAddr(owner) + padAddr(spender);
+  }
+
+  let ctx = null;
+  function fail(msg){
+    const el = $('status');
+    el.className = 'status err';
+    el.textContent = msg;
+  }
+  function info(msg){
+    const el = $('status');
+    el.className = 'status';
+    el.textContent = msg;
+  }
+  function ok(msg){
+    const el = $('status');
+    el.className = 'status ok';
+    el.textContent = msg;
+  }
+
+  function init(){
+    if (!/^01-\d{6}-[A-Z0-9]{4}$/.test(invoice) || !/^\d+(\.\d{1,6})?$/.test(amountStr) || Number(amountStr) <= 0 || !TOKENS[tokenKey]) {
+      $('invalid').classList.remove('hidden');
+      return;
+    }
+    const t = TOKENS[tokenKey];
+    const units = BigInt(Math.round(Number(amountStr) * 1e6));
+    ctx = {token:t, units, invoice};
+    $('amt').textContent = amountStr;
+    $('tok').textContent = tokenKey;
+    $('inv').textContent = invoice;
+    $('svc').textContent = SERVICES[service] || '01 服务';
+    $('tokaddr').textContent = t.addr;
+    $('units').textContent = units.toString();
+    $('inv32').textContent = '0x' + strToBytes32(invoice);
+    $('paydata').textContent = payData(t.addr, units, invoice);
+    $('payui').classList.remove('hidden');
+    $('paybtn').disabled = false;
+
+    const saved = JSON.parse(localStorage.getItem('01_pay_meta') || '{}');
+    $('company').value = saved.company || '';
+    $('email').value = saved.email || '';
+    $('memo').value = saved.memo || '';
+    ['company','email','memo'].forEach(id => {
+      $(id).addEventListener('input', () => {
+        const m = {company:$('company').value, email:$('email').value, memo:$('memo').value};
+        localStorage.setItem('01_pay_meta', JSON.stringify(m));
+      });
+    });
+  }
+
+  async function ensureChain(provider){
+    const cur = await provider.request({method:'eth_chainId'});
+    if (cur === CHAIN_ID) return;
+    try {
+      await provider.request({method:'wallet_switchEthereumChain', params:[{chainId:CHAIN_ID}]});
+    } catch (e) {
+      if (e && e.code === 4902) {
+        await provider.request({method:'wallet_addEthereumChain', params:[{
+          chainId: CHAIN_ID,
+          chainName: 'Polygon PoS',
+          nativeCurrency: {name:'POL', symbol:'POL', decimals:18},
+          rpcUrls: ['https://polygon-rpc.com'],
+          blockExplorerUrls: ['https://polygonscan.com']
+        }]});
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  async function waitReceipt(provider, hash, timeoutMs){
+    const start = Date.now();
+    while (Date.now() - start < (timeoutMs || 180000)) {
+      const r = await provider.request({method:'eth_getTransactionReceipt', params:[hash]});
+      if (r) return r;
+      await new Promise(res => setTimeout(res, 3000));
+    }
+    throw new Error('等待交易确认超时，请在 Polygonscan 查看：' + hash);
+  }
+
+  async function pay(){
+    const provider = window.ethereum;
+    if (!provider) {
+      $('manual').classList.remove('hidden');
+      return fail('未检测到钱包。请用钱包内置浏览器打开本页，或使用下方手动付款参数。');
+    }
+    const btn = $('paybtn');
+    btn.disabled = true;
+    try {
+      const accounts = await provider.request({method:'eth_requestAccounts'});
+      const owner = accounts[0];
+      info('已连接 ' + owner + '，检查网络…');
+      await ensureChain(provider);
+      info('检查代币授权…');
+
+      const allowanceHex = await provider.request({
+        method:'eth_call',
+        params:[{to:ctx.token.addr, data:allowanceData(owner, ROUTER)}, 'latest']
+      });
+      const allowance = (allowanceHex && allowanceHex !== '0x') ? BigInt(allowanceHex) : 0n;
+
+      if (allowance > 0n && allowance < ctx.units) {
+        info('重置旧授权：请在钱包确认 approve(0)…');
+        const zh = await provider.request({
+          method:'eth_sendTransaction',
+          params:[{from:owner, to:ctx.token.addr, data:approveData(ROUTER, 0)}]
+        });
+        const zr = await waitReceipt(provider, zh);
+        if (!zr || zr.status === '0x0') throw new Error('重置授权失败：' + zh);
+      }
+
+      if (allowance < ctx.units) {
+        info('授权中：请在钱包确认 approve（第 1/2 步）…');
+        const ah = await provider.request({
+          method:'eth_sendTransaction',
+          params:[{from:owner, to:ctx.token.addr, data:approveData(ROUTER, ctx.units)}]
+        });
+        info('approve 已提交，等待确认… ' + ah);
+        const ar = await waitReceipt(provider, ah);
+        if (!ar || ar.status === '0x0') throw new Error('approve 失败：' + ah);
+      }
+
+      info('付款中：请在钱包确认 pay（第 2/2 步）…');
+      const ph = await provider.request({
+        method:'eth_sendTransaction',
+        params:[{from:owner, to:ROUTER, data:payData(ctx.token.addr, ctx.units, ctx.invoice)}]
+      });
+      info('付款已提交，等待确认… ' + ph);
+      const pr = await waitReceipt(provider, ph);
+      if (!pr || pr.status === '0x0') throw new Error('付款交易失败：' + ph);
+
+      ok('付款成功。invoiceId ' + ctx.invoice + ' 已上链。');
+      $('txh').textContent = ph;
+      $('payer').textContent = owner;
+      $('receipt').classList.remove('hidden');
+      $('receipt').dataset.tx = ph;
+      $('receipt').dataset.owner = owner;
+      $('receipt').dataset.time = new Date().toISOString();
+      $('receipt').dataset.block = pr.blockNumber || '';
+    } catch (e) {
+      const msg = (e && (e.message || e.data && e.data.message)) || String(e);
+      if (e && e.code === 4001) fail('你取消了钱包操作，未付款。');
+      else fail('付款未完成：' + msg);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  $('paybtn').addEventListener('click', pay);
+
+  $('copybtn').addEventListener('click', async () => {
+    const text = [
+      'router: ' + ROUTER,
+      'token: ' + ctx.token.addr,
+      'amount_units: ' + ctx.units.toString(),
+      'invoice: ' + ctx.invoice,
+      'invoice_bytes32: 0x' + strToBytes32(ctx.invoice),
+      'pay_calldata: ' + payData(ctx.token.addr, ctx.units, ctx.invoice)
+    ].join('\n');
+    try { await navigator.clipboard.writeText(text); ok('付款参数已复制'); }
+    catch (e) { fail('复制失败，请手动选择文本'); }
+  });
+
+  $('dlbtn').addEventListener('click', () => {
+    const rc = $('receipt');
+    const txt = [
+      '01 服务付款回执',
+      'invoiceId: ' + ctx.invoice,
+      '服务: ' + (SERVICES[service] || '01 服务'),
+      '公司/机构: ' + ($('company').value || ''),
+      '邮箱: ' + ($('email').value || ''),
+      '备注: ' + ($('memo').value || ''),
+      '金额: ' + amountStr + ' ' + tokenKey,
+      '付款地址: ' + rc.dataset.owner,
+      '交易哈希: ' + rc.dataset.tx,
+      '区块: ' + rc.dataset.block,
+      '时间: ' + rc.dataset.time,
+      '收款合约: ' + ROUTER,
+      '金库: ' + TREASURY
+    ].join('\n');
+    const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = ctx.invoice + '-receipt.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

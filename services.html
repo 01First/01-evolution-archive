@@ -190,6 +190,7 @@
     </div>
     <p class="sub" style="margin-top:12px">付款调用：<code class="mono">pay(token, amount, invoiceId)</code>。invoiceId 按 ASCII 右补零转成 bytes32；不会转换的客户可在收到报价单后索取逐步操作说明。</p>
     <div class="warnbox" style="margin-top:12px">必须先收到含 invoiceId 的报价单再付款。直接向合约地址转账、或未携带 invoiceId 的付款不会自动对账，需要人工确认，交付会延迟。</div>
+    <p class="sub" style="margin-top:10px">每张报价单会单独生成付款链接与二维码，只发送给对应客户；公开页面不提供支付入口。</p>
   </section>
 
   <section>
