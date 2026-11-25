@@ -25,6 +25,7 @@ python3 contracts/verify_merkle.py --chain
 - 金库 Safe：`0x39C3730c1a5C42e763a8DEEA968a8A3D01010101`（5 owner / 3 阈值）
 - 金库锁仓：`0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35`（40 亿枚 · 730 天线性）
 - 团队锁仓：`0x93370E8002D84946Fc579D9CF5FD7a6b88B85107`（25 亿枚 · 180 天 cliff + 1460 天线性）
+- 创世空投分发：`0x64a18A19A6C2D8D328DC5facD927dD6cFBeff0DF`（owner 金库 Safe；未设根、未注资）
 - 第一季：2026-11-23 至 2027-01-31（进行中）
 - DEX 交易对：暂无（当前无池，未上线交易）
 - 旧币：已作废，不迁移、不映射旧持仓、不对旧持仓空投（见透明度页“旧币历史”）
@@ -37,7 +38,7 @@ python3 contracts/verify_merkle.py --chain
 | 团队锁仓 | 25% | 25 亿枚 | TeamVesting `0x9337…5107`，180 天 cliff + 1460 天 |
 | 社区奖励 | 20% | 20 亿枚 | 金库 Safe，按季度发放，每 8 个季度额度减半 |
 | 流动性储备 | 10% | 10 亿枚 | 发行方 LP `0xE6Ad…11111111`，当前未建池 |
-| 创世空投 | 5% | 5 亿枚 | 金库 Safe，名单未生成、合约未部署 |
+| 创世空投 | 5% | 5 亿枚 | 金库 Safe；分发合约 `0x64a1…f0DF` 已部署，未设根、未注资 |
 
 ## 链上存证
 
@@ -69,6 +70,7 @@ index.html                     站点（单文件，无外部依赖）
 01_logo.png                    Logo
 POINTS.md                      第一季贡献积分规则
 contracts/ArchiveAnchor.sol   存证合约源码
+contracts/MerkleDistributor.sol 空投/奖励分发合约源码
 contracts/merkle.json          30 条叶子、证明与根
 contracts/verify_merkle.py     独立核验脚本
 .github/ISSUE_TEMPLATE/        贡献登记 / 纠错模板

@@ -92,7 +92,7 @@
     <div class="kicker">Transparency · 链上可核验</div>
     <h1>透明度页：<em>只写链上事实</em></h1>
     <p class="lead">本页只列可在 Polygonscan 独立核验的地址、余额与交易，不做资产背书、不承诺价格或收益。所有数字以页面标注的区块为准，变化后请以链上实时数据为准。</p>
-    <div class="stamp">最后核对：2026-11-25 · 区块 97,918,724</div>
+    <div class="stamp">最后核对：2026-11-25 · 区块 97,919,426</div>
   </header>
 
   <section>
@@ -164,7 +164,7 @@
       <div class="row"><span>释放曲线</span><code>第 1–8 季每季 1.25 亿枚；第 9–16 季每季 0.625 亿枚；第 17–24 季每季 0.3125 亿枚；依此类推</code></div>
       <div class="row"><span>曲线合计</span><code>8R + 4R + 2R + … = 16R = 20 亿枚（R = 1.25 亿）</code></div>
       <div class="row"><span>第一季额度</span><code>1.25 亿枚</code></div>
-      <div class="row"><span>发奖合约</span><code class="bad">尚未部署（部署前公示地址与 Merkle 根）</code></div>
+      <div class="row"><span>发奖合约</span><code>季末名单确定后部署当季 MerkleDistributor；当前无已注资合约</code></div>
       <div class="row"><span>已发放季数</span><code>0</code></div>
     </div>
     <p class="note">流程：季末快照 → 公示 7 天 → 生成当季 Merkle 根 → 部署/使用 MerkleDistributor → 参与者自行领取并支付 gas。任何发放都会提前公示名单、根和合约地址，不会自动发币。</p>
@@ -172,14 +172,18 @@
 
   <section>
     <h2>创世空投</h2>
-    <p class="sub">5 亿枚 ZERO1 预留在金库 Safe，名单未生成、合约未部署。</p>
+    <p class="sub">5 亿枚 ZERO1 预留在金库 Safe，名单未生成；分发合约已部署但未设根、未注资。</p>
     <div class="kv">
       <div class="row"><span>预留数量</span><code>5 亿枚（总量的 5%）</code></div>
       <div class="row"><span>存放地址</span><code>金库 Safe 0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</code></div>
-      <div class="row"><span>发放状态</span><code>未开始 · 名单未生成 · 合约未部署</code></div>
+      <div class="row"><span>分发合约</span><code><a href="https://polygonscan.com/address/0x64a18A19A6C2D8D328DC5facD927dD6cFBeff0DF" target="_blank" rel="noopener">0x64a18A19A6C2D8D328DC5facD927dD6cFBeff0DF</a> · owner 金库 Safe</code></div>
+      <div class="row"><span>合约状态</span><code>已部署 · 根未设置 · 未注资（ZERO1 余额 0）</code></div>
+      <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0xe6b18d50305f6fd952edb4f0d756e17c6c8a2d38e1619145e9d7607f75e71670" target="_blank" rel="noopener">0xe6b18d50…e71670</a> · 区块 97,919,422</code></div>
+      <div class="row"><span>owner 移交</span><code><a href="https://polygonscan.com/tx/0x87a2aa28d260c7559967a4c48adbc9df4a726d7461a431fd33dee502ab98e300" target="_blank" rel="noopener">0x87a2aa28…98e300</a> · 区块 97,919,426</code></div>
+      <div class="row"><span>发放状态</span><code>未开始 · 名单未生成 · 合约未设根、未注资</code></div>
       <div class="row"><span>排除范围</span><code>旧币 3 个狙击地址（合计 51.3%）不进入任何空投名单</code></div>
     </div>
-    <p class="note">空投规则、名单生成方式与合约地址将在发放前单独公示；当前不接受任何登记，也不需要连接钱包。</p>
+    <p class="note">空投规则与名单将在发放前公示；分发合约虽已部署，但 merkleRoot 为 0、deadline 为 0、代币余额为 0，当前无法领取，也不接受任何登记或连接钱包。</p>
   </section>
 
   <section>
@@ -251,7 +255,8 @@
       <div class="card"><b>3. 锁仓参数</b><p>两个锁仓合约的 beneficiary 均为金库 Safe；金库 730 天无 cliff，团队 180 天 cliff + 1460 天线性；released 当前为 0。</p></div>
       <div class="card"><b>4. 多签配置</b><p>金库 Safe 0x39C3…0101 的 getOwners() 返回 5 个地址，getThreshold() 返回 3。</p></div>
       <div class="card"><b>5. 档案锚定</b><p>ArchiveAnchor 0x38bE…1F45 的 anchors(0) 返回本页 Merkle 根与 recordCount = 30。</p></div>
-      <div class="card"><b>6. 旧币归档</b><p>旧代币 0x095d…f1b7 与旧交易对 0x0b20…575b 仅为历史事实；新代币任何函数均不读取旧币余额。</p></div>
+      <div class="card"><b>6. 空投分发合约</b><p>0x64a1…f0DF 的 owner 为金库 Safe，merkleRoot 与 deadline 均为 0，ZERO1 余额为 0——即已部署但未启用。</p></div>
+      <div class="card"><b>7. 旧币归档</b><p>旧代币 0x095d…f1b7 与旧交易对 0x0b20…575b 仅为历史事实；新代币任何函数均不读取旧币余额。</p></div>
     </div>
   </section>
 
