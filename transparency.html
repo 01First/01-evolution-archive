@@ -92,7 +92,7 @@
     <div class="kicker">Transparency · 链上可核验</div>
     <h1>透明度页：<em>只写链上事实</em></h1>
     <p class="lead">本页只列可在 Polygonscan 独立核验的地址、余额与交易，不做资产背书、不承诺价格或收益。所有数字以页面标注的区块为准，变化后请以链上实时数据为准。</p>
-    <div class="stamp">最后核对：2026-11-25 · 区块 97,919,426</div>
+    <div class="stamp">最后核对：2026-11-25 · 区块 97,920,176</div>
   </header>
 
   <section>
@@ -187,6 +187,20 @@
   </section>
 
   <section>
+    <h2>服务收入与收款</h2>
+    <p class="sub">面向机构客户提供服务；稳定币收款直达金库 Safe，路由合约不留存资金。</p>
+    <div class="kv">
+      <div class="row"><span>收款路由</span><code><a href="https://polygonscan.com/address/0xbe77D7f26E1095A12f0542DC2a4814F4344B2441" target="_blank" rel="noopener">0xbe77D7f26E1095A12f0542DC2a4814F4344B2441</a> · 无 owner</code></div>
+      <div class="row"><span>资金去向</span><code>金库 Safe <a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3…0101</a> · 3/5</code></div>
+      <div class="row"><span>支持币种</span><code>USDT / USDC / USDC.e（Polygon，6 位小数）</code></div>
+      <div class="row"><span>合约留存</span><code class="ok">0 · 每笔付款直接转入 Safe</code></div>
+      <div class="row"><span>链上凭证</span><code>PaymentReceived(invoiceId, payer, token, amount)</code></div>
+      <div class="row"><span>支付赠送</span><code>无积分、无代币、无 NFT 兑换承诺</code></div>
+    </div>
+    <p class="note">核验：router.treasury() 为金库 Safe；isAllowedToken(USDT/USDC/USDC.e) 均为 true；合约没有 owner、没有提款函数，代币余额应始终为 0。同一路由合约可按链重复部署，各链收款地址会在此页单独标注。</p>
+  </section>
+
+  <section>
     <h2>流动性</h2>
     <p class="sub">10 亿枚 ZERO1 在发行方 LP 地址，当前没有创建任何 DEX 池。</p>
     <div class="kv">
@@ -257,6 +271,7 @@
       <div class="card"><b>5. 档案锚定</b><p>ArchiveAnchor 0x38bE…1F45 的 anchors(0) 返回本页 Merkle 根与 recordCount = 30。</p></div>
       <div class="card"><b>6. 空投分发合约</b><p>0x64a1…f0DF 的 owner 为金库 Safe，merkleRoot 与 deadline 均为 0，ZERO1 余额为 0——即已部署但未启用。</p></div>
       <div class="card"><b>7. 旧币归档</b><p>旧代币 0x095d…f1b7 与旧交易对 0x0b20…575b 仅为历史事实；新代币任何函数均不读取旧币余额。</p></div>
+      <div class="card"><b>8. 服务收款路由</b><p>0xbe77…2441 的 treasury() 为金库 Safe，三种稳定币白名单均为 true；合约无 owner、无提款函数，余额应始终为 0。</p></div>
     </div>
   </section>
 

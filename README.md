@@ -26,6 +26,7 @@ python3 contracts/verify_merkle.py --chain
 - 金库锁仓：`0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35`（40 亿枚 · 730 天线性）
 - 团队锁仓：`0x93370E8002D84946Fc579D9CF5FD7a6b88B85107`（25 亿枚 · 180 天 cliff + 1460 天线性）
 - 创世空投分发：`0x64a18A19A6C2D8D328DC5facD927dD6cFBeff0DF`（owner 金库 Safe；未设根、未注资）
+- 服务收款路由：`0xbe77D7f26E1095A12f0542DC2a4814F4344B2441`（USDT/USDC/USDC.e 直转金库 Safe，合约不留存）
 - 第一季：2026-11-23 至 2027-01-31（进行中）
 - DEX 交易对：暂无（当前无池，未上线交易）
 - 旧币：已作废，不迁移、不映射旧持仓、不对旧持仓空投（见透明度页“旧币历史”）
@@ -71,6 +72,7 @@ index.html                     站点（单文件，无外部依赖）
 POINTS.md                      第一季贡献积分规则
 contracts/ArchiveAnchor.sol   存证合约源码
 contracts/MerkleDistributor.sol 空投/奖励分发合约源码
+contracts/PaymentRouter.sol   服务收款路由源码（收款直转金库，不留存）
 contracts/merkle.json          30 条叶子、证明与根
 contracts/verify_merkle.py     独立核验脚本
 .github/ISSUE_TEMPLATE/        贡献登记 / 纠错模板
