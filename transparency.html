@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>透明度 · 01 进化档案馆</title>
-<meta name="description" content="01 币与 01 进化档案馆的链上透明度页面：合约、LP、团队预留、奖励池与风险声明。">
+<meta name="description" content="ZeroOne（ZERO1）与 01 进化档案馆的链上透明度页面：新合约、分配、锁仓、金库 Safe、社区奖励、旧币归档与风险声明。">
 <link rel="icon" href="01_logo.png">
 <link rel="canonical" href="https://01first.github.io/01-evolution-archive/transparency.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="01 进化档案馆">
 <meta property="og:title" content="透明度 · 01 进化档案馆">
-<meta property="og:description" content="01 币链上透明度页：合约地址、LP 销毁、团队预留锁仓、奖励池与风险声明。">
+<meta property="og:description" content="ZeroOne（ZERO1）链上透明度页：合约地址、代币分配、锁仓、金库 Safe、社区奖励与旧币归档。">
 <meta property="og:url" content="https://01first.github.io/01-evolution-archive/transparency.html">
 <meta property="og:image" content="https://01first.github.io/01-evolution-archive/og-cover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="透明度 · 01 进化档案馆">
-<meta name="twitter:description" content="01 币链上透明度页：合约、LP、锁仓与风险声明。">
+<meta name="twitter:description" content="ZeroOne（ZERO1）链上透明度页：合约、分配、锁仓、Safe 与旧币归档。">
 <meta name="twitter:image" content="https://01first.github.io/01-evolution-archive/og-cover.png">
 <style>
   :root{
@@ -69,6 +69,9 @@
   .warnbox{border:1px solid rgba(251,113,133,.35);background:rgba(76,5,25,.22);
     border-radius:14px;padding:14px 18px;font-size:13px;color:#fecdd3}
   .warnbox b{color:#fda4af}
+  .archivebox{border:1px solid rgba(251,191,36,.32);background:rgba(251,191,36,.06);
+    border-radius:14px;padding:14px 18px;font-size:13px;color:#fde68a}
+  .archivebox b{color:var(--gold)}
   .note{font-size:12.5px;color:var(--dim);margin-top:9px}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
@@ -89,105 +92,166 @@
     <div class="kicker">Transparency · 链上可核验</div>
     <h1>透明度页：<em>只写链上事实</em></h1>
     <p class="lead">本页只列可在 Polygonscan 独立核验的地址、余额与交易，不做资产背书、不承诺价格或收益。所有数字以页面标注的区块为准，变化后请以链上实时数据为准。</p>
-    <div class="stamp">最后核对：2026-11-23 · 区块 97,799,642</div>
+    <div class="stamp">最后核对：2026-11-25 · 区块 97,918,724</div>
   </header>
 
   <section>
-    <h2>01 代币</h2>
-    <p class="sub">固定总量，无增发入口，无交易税。</p>
+    <h2>ZeroOne（ZERO1）代币</h2>
+    <p class="sub">固定总量 100 亿枚，无增发、无 owner、无交易税、无黑名单。</p>
     <div class="kv">
-      <div class="row"><span>合约</span><code><a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</a></code></div>
-      <div class="row"><span>总供应</span><code>1000 亿枚（100,000,000,000）</code></div>
+      <div class="row"><span>合约</span><code><a href="https://polygonscan.com/token/0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa" target="_blank" rel="noopener">0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa</a></code></div>
+      <div class="row"><span>名称 / 符号</span><code>ZeroOne / ZERO1</code></div>
+      <div class="row"><span>总供应</span><code>100 亿枚（10,000,000,000）</code></div>
       <div class="row"><span>精度 / 链</span><code>18 · Polygon PoS</code></div>
-      <div class="row"><span>增发</span><code class="ok">无 mint 入口</code></div>
+      <div class="row"><span>增发</span><code class="ok">无 mint 入口，合约无 owner</code></div>
       <div class="row"><span>交易税</span><code class="ok">无</code></div>
+      <div class="row"><span>销毁</span><code>仅持有者可自愿 burn，总量随之减少</code></div>
     </div>
-    <p class="note">核验方式：打开代币合约的 Read Contract，查看 totalSupply；在 Write Contract 中不存在 mint 方法。</p>
+    <p class="note">核验方式：打开合约 Read Contract，查看 totalSupply 与 decimals；合约不存在 owner() 与 mint()，部署后无任何管理员权限。</p>
+  </section>
+
+  <section>
+    <h2>代币分配（链上余额）</h2>
+    <p class="sub">总量 100 亿枚，按下表拆分，均可直接用 balanceOf 核对。</p>
+    <div class="kv">
+      <div class="row"><span>流动性储备 · LP</span><code><a href="https://polygonscan.com/address/0xE6Ad7558Ff4B392a34d714e18286af3b11111111" target="_blank" rel="noopener">0xE6Ad7558Ff4B392a34d714e18286af3b11111111</a> · 10 亿枚（10%）</code></div>
+      <div class="row"><span>金库 Safe</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</a> · 25 亿枚（社区 20 亿 + 创世空投 5 亿）</code></div>
+      <div class="row"><span>金库锁仓</span><code><a href="https://polygonscan.com/address/0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35" target="_blank" rel="noopener">0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35</a> · 40 亿枚（40%）</code></div>
+      <div class="row"><span>团队锁仓</span><code><a href="https://polygonscan.com/address/0x93370E8002D84946Fc579D9CF5FD7a6b88B85107" target="_blank" rel="noopener">0x93370E8002D84946Fc579D9CF5FD7a6b88B85107</a> · 25 亿枚（25%）</code></div>
+      <div class="row"><span>合计</span><code class="ok">100 亿枚（100%）</code></div>
+    </div>
+    <p class="note">核验：在 ZERO1 合约 0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa 中分别查询上述四个地址的 balanceOf，合计应等于 totalSupply。</p>
+  </section>
+
+  <section>
+    <h2>锁仓合约</h2>
+    <p class="sub">金库与团队各一份，受益人都是金库 Safe；release 只能打到受益人，任何人可触发但无法改变流向。</p>
+    <div class="kv">
+      <div class="row"><span>金库锁仓合约</span><code><a href="https://polygonscan.com/address/0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35" target="_blank" rel="noopener">0xcD3C6414b2b98c8d1bA161C187EC8d08D55e4c35</a></code></div>
+      <div class="row"><span>锁仓数量</span><code>40 亿枚 ZERO1</code></div>
+      <div class="row"><span>解锁方式</span><code>无 cliff · 730 天线性 · 起始 2026-11-25 12:56:01（CST）</code></div>
+      <div class="row"><span>团队锁仓合约</span><code><a href="https://polygonscan.com/address/0x93370E8002D84946Fc579D9CF5FD7a6b88B85107" target="_blank" rel="noopener">0x93370E8002D84946Fc579D9CF5FD7a6b88B85107</a></code></div>
+      <div class="row"><span>锁仓数量</span><code>25 亿枚 ZERO1</code></div>
+      <div class="row"><span>解锁方式</span><code>cliff 180 天 + 1460 天线性 · 起始 2026-11-25 12:56:01（CST）</code></div>
+      <div class="row"><span>受益人</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</a>（金库 Safe）</code></div>
+      <div class="row"><span>已释放</span><code>0（截至核对区块）</code></div>
+    </div>
+    <p class="note">核验：读取 start()、cliff()、duration()、totalAmount()、beneficiary()、released()；release() 无权限限制，但只能把代币转到 beneficiary，无法指定其他接收地址。</p>
+  </section>
+
+  <section>
+    <h2>金库 Safe（多签）</h2>
+    <p class="sub">5 个 owner、3 个签名才能执行；单签无法移动任何资金。</p>
+    <div class="kv">
+      <div class="row"><span>地址</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</a></code></div>
+      <div class="row"><span>版本 / 阈值</span><code>Safe L2 v1.3.0 · 3 / 5</code></div>
+      <div class="row"><span>Owner 1</span><code>0xE6Ad7558Ff4B392a34d714e18286af3b11111111</code></div>
+      <div class="row"><span>Owner 2</span><code>0xB19034Da5d02053A1dEA48aA84B06A3266666666</code></div>
+      <div class="row"><span>Owner 3</span><code>0xC017EeD1dC6163e638DC3ad9F3FC110277777777</code></div>
+      <div class="row"><span>Owner 4</span><code>0x00A39D2d982b2929f7B1553194a7D99788888888</code></div>
+      <div class="row"><span>Owner 5</span><code>0xd7AB905E9ac2B394183e9E33CdeEC6C799999999</code></div>
+      <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0x5cba4870be72842d009ab4e2a9060a935934d707c21b965d189910fbc50003ea" target="_blank" rel="noopener">0x5cba4870…0003ea</a> · 区块 97,917,695</code></div>
+    </div>
+    <p class="note">核验：Safe 的 Read Contract 中 getOwners() 返回 5 个地址，getThreshold() 返回 3。任何资金操作至少需要 3 个 owner 私钥签名；私钥离线保存，不存放在服务器或代码仓库。</p>
+  </section>
+
+  <section>
+    <h2>社区奖励</h2>
+    <p class="sub">20 亿枚 ZERO1 由金库 Safe 持有，按季度释放，每 8 个季度额度减半。</p>
+    <div class="kv">
+      <div class="row"><span>社区奖励池</span><code>20 亿枚（总量的 20%）</code></div>
+      <div class="row"><span>存放地址</span><code>金库 Safe 0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</code></div>
+      <div class="row"><span>释放曲线</span><code>第 1–8 季每季 1.25 亿枚；第 9–16 季每季 0.625 亿枚；第 17–24 季每季 0.3125 亿枚；依此类推</code></div>
+      <div class="row"><span>曲线合计</span><code>8R + 4R + 2R + … = 16R = 20 亿枚（R = 1.25 亿）</code></div>
+      <div class="row"><span>第一季额度</span><code>1.25 亿枚</code></div>
+      <div class="row"><span>发奖合约</span><code class="bad">尚未部署（部署前公示地址与 Merkle 根）</code></div>
+      <div class="row"><span>已发放季数</span><code>0</code></div>
+    </div>
+    <p class="note">流程：季末快照 → 公示 7 天 → 生成当季 Merkle 根 → 部署/使用 MerkleDistributor → 参与者自行领取并支付 gas。任何发放都会提前公示名单、根和合约地址，不会自动发币。</p>
+  </section>
+
+  <section>
+    <h2>创世空投</h2>
+    <p class="sub">5 亿枚 ZERO1 预留在金库 Safe，名单未生成、合约未部署。</p>
+    <div class="kv">
+      <div class="row"><span>预留数量</span><code>5 亿枚（总量的 5%）</code></div>
+      <div class="row"><span>存放地址</span><code>金库 Safe 0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</code></div>
+      <div class="row"><span>发放状态</span><code>未开始 · 名单未生成 · 合约未部署</code></div>
+      <div class="row"><span>排除范围</span><code>旧币 3 个狙击地址（合计 51.3%）不进入任何空投名单</code></div>
+    </div>
+    <p class="note">空投规则、名单生成方式与合约地址将在发放前单独公示；当前不接受任何登记，也不需要连接钱包。</p>
   </section>
 
   <section>
     <h2>流动性</h2>
-    <p class="sub">QuickSwap V2 池，LP 代币 100% 位于销毁地址。</p>
+    <p class="sub">10 亿枚 ZERO1 在发行方 LP 地址，当前没有创建任何 DEX 池。</p>
     <div class="kv">
-      <div class="row"><span>交易对</span><code><a href="https://polygonscan.com/address/0x0b202ad83212b460bc2b26913b3727662383575b" target="_blank" rel="noopener">0x0b202ad83212b460bc2b26913b3727662383575b</a></code></div>
-      <div class="row"><span>LP 总量</span><code>309,838.667697</code></div>
-      <div class="row"><span>0x…dEaD 持有</span><code class="ok">100.00%</code></div>
-      <div class="row"><span>团队 LP</span><code>0</code></div>
-      <div class="row"><span>466666 LP</span><code>0</code></div>
+      <div class="row"><span>流动性储备</span><code>10 亿枚（总量的 10%）</code></div>
+      <div class="row"><span>持有地址</span><code><a href="https://polygonscan.com/address/0xE6Ad7558Ff4B392a34d714e18286af3b11111111" target="_blank" rel="noopener">0xE6Ad7558Ff4B392a34d714e18286af3b11111111</a></code></div>
+      <div class="row"><span>DEX 交易对</span><code class="bad">暂无 · 未上线交易</code></div>
+      <div class="row"><span>做市 / 上所</span><code>未进行，不承诺时间表</code></div>
     </div>
-    <p class="note">核验方式：打开交易对合约，读取 totalSupply 与 balanceOf(0x…dEaD)；LP 已全部销毁，团队无法撤出该池流动性。</p>
+    <p class="note">本站不提供任何交易链接。若未来建池，池子参数、LP 锁定方式与时间锁地址会提前公示；流动性储备不会用于团队私有用途。</p>
   </section>
 
-  <section>
-    <h2>团队预留与锁仓</h2>
-    <p class="sub">200 亿枚已拆分：150 亿进入 48 个月线性锁仓，50 亿进入奖励多签。</p>
-    <div class="kv">
-      <div class="row"><span>锁仓合约</span><code><a href="https://polygonscan.com/address/0xe57461E12d93fd9dA2895FC99128329088C4B5B2" target="_blank" rel="noopener">0xe57461E12d93fd9dA2895FC99128329088C4B5B2</a></code></div>
-      <div class="row"><span>锁仓数量</span><code>150.00 亿枚</code></div>
-      <div class="row"><span>受益人 Safe A</span><code><a href="https://polygonscan.com/address/0xC2f9338e30bD009BB8fa4e780d4489e49A88500E" target="_blank" rel="noopener">0xC2f9338e30bD009BB8fa4e780d4489e49A88500E</a></code></div>
-      <div class="row"><span>解锁方式</span><code>48 个月线性 · 2026-11-23 → 2030-11-22（UTC）</code></div>
-      <div class="row"><span>当前团队 EOA</span><code>0x8AF1…666666 · 0 枚（已全部转出）</code></div>
+  <section id="history">
+    <h2>旧币历史（归档）</h2>
+    <p class="sub">旧 01 代币体系已于 2026-11-25 全部作废：不迁移、不映射旧持仓、不对旧持仓空投。</p>
+    <div class="archivebox">
+      <b>处置决定：</b>旧代币合约、旧交易对、旧奖励 Safe、旧发奖合约、旧团队锁仓与旧存证合约全部停用，不再维护，也不作为新代币的任何兑换、映射或空投依据。以下仅作链上事实归档。
     </div>
-    <p class="note">核验：锁仓合约 owner() 为 Safe A，start() 为 1795403022，duration() 为 126144000 秒，代币余额 150 亿；释放按秒线性进行，任何人可调用 release(token)，代币只会进入受益人 Safe A。</p>
-  </section>
-
-  <section>
-    <h2>多签配置</h2>
-    <p class="sub">两个 Safe 均为 2/3，单签无法移动资金。</p>
-    <div class="kv">
-      <div class="row"><span>Safe A（锁仓受益人）</span><code><a href="https://polygonscan.com/address/0xC2f9338e30bD009BB8fa4e780d4489e49A88500E" target="_blank" rel="noopener">0xC2f9…500E</a> · 2/3</code></div>
-      <div class="row"><span>Safe B（奖励池）</span><code><a href="https://polygonscan.com/address/0x0914120572fE015Bea35339931ac30b8A5eebF4D" target="_blank" rel="noopener">0x0914…bF4D</a> · 2/3</code></div>
-      <div class="row"><span>签名人 1</span><code>团队 0x8AF1…666666</code></div>
-      <div class="row"><span>签名人 2</span><code>0xfA28…466666</code></div>
-      <div class="row"><span>签名人 3（备份）</span><code>0x06CA…7cE5</code></div>
-      <div class="row"><span>阈值</span><code>2 / 3</code></div>
-      <div class="row"><span>2/3 执行演练</span><code class="ok">已通过 · 2026-11-23 · <a href="https://polygonscan.com/tx/0x342eac5fb60f671b08a7539bcc15c2ed480078fb8fac0d0651cdc7feb62fa911" target="_blank" rel="noopener">0x342e…a911</a></code></div>
+    <div class="kv" style="margin-top:14px">
+      <div class="row"><span>旧代币</span><code><a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</a> · 总量 1000 亿枚</code></div>
+      <div class="row"><span>旧交易对</span><code><a href="https://polygonscan.com/address/0x0b202ad83212b460bc2b26913b3727662383575b" target="_blank" rel="noopener">0x0b202ad83212b460bc2b26913b3727662383575b</a> · 01/WPOL · LP 已 100% 销毁</code></div>
+      <div class="row"><span>旧奖励 Safe</span><code>0x0914120572fE015Bea35339931ac30b8A5eebF4D · 2/3</code></div>
+      <div class="row"><span>旧发奖合约</span><code>0x781b218941d59ca613b292baff5b2c5638309d50</code></div>
+      <div class="row"><span>旧团队锁仓</span><code>0xe57461E12d93fd9dA2895FC99128329088C4B5B2 · 受益人 0xC2f9338e30bD009BB8fa4e780d4489e49A88500E</code></div>
+      <div class="row"><span>旧存证合约</span><code>0xb5f365df38247cb0d49e5e5d3237ed597019e5d9</code></div>
+      <div class="row"><span>旧币持仓占比</span><code class="bad">3 个地址合计 51.3%（链上归档）</code></div>
+      <div class="row"><span>旧币建仓成本</span><code>3 个地址合计约 2.19 POL（链上归档）</code></div>
+      <div class="row"><span>新体系处理</span><code class="ok">不映射、不空投、不迁移；旧持仓不进入新代币任何名单</code></div>
     </div>
-    <p class="note">备份签名人的私钥需要离线保存；两个签名人合作即可执行，任何单签都不能单独移动资金。2026-11-23 已用 466666 + 备份签名人完成一次 0 值 approve 演练，Safe nonce 由 0 变为 1，代币余额不变。</p>
-  </section>
-
-  <section>
-    <h2>第一季奖励</h2>
-    <p class="sub">50 亿枚预算，分 7 个 Merkle 根发放；当前未注资、未发布名单。</p>
+    <p class="note" style="margin-top:14px">旧币被集中持有的 3 个地址（公开链上数据，仅作事实记录，不构成对地址所有者身份的判断或指控）：</p>
     <div class="kv">
-      <div class="row"><span>发奖合约</span><code><a href="https://polygonscan.com/address/0x781b218941d59ca613b292baff5b2c5638309d50" target="_blank" rel="noopener">0x781b218941d59ca613b292baff5b2c5638309d50</a></code></div>
-      <div class="row"><span>奖励池 Safe B</span><code><a href="https://polygonscan.com/address/0x0914120572fE015Bea35339931ac30b8A5eebF4D" target="_blank" rel="noopener">0x0914…bF4D</a> · 50 亿枚 · 2/3</code></div>
-      <div class="row"><span>合约 owner</span><code>奖励池 Safe B（2/3 多签）</code></div>
-      <div class="row"><span>绑定代币</span><code>01 0x095d…f1b7</code></div>
-      <div class="row"><span>合约内 01 余额</span><code>0</code></div>
-      <div class="row"><span>已发布季数</span><code>0</code></div>
-      <div class="row"><span>预算结构</span><code>首次 10 亿 + 6 × 约 6.667 亿</code></div>
+      <div class="row"><span>地址 1 · 28.185%</span><code>0x541b73dc72f1461a53b665907d70fcae34bc7271</code></div>
+      <div class="row"><span>地址 2 · 11.716%</span><code>0xb758e397a818710ed2d0c5721130b54814d28868</code></div>
+      <div class="row"><span>地址 3 · 11.399%</span><code>0xa9c7c70b01c78ef522d56bb805e265774fe90666</code></div>
     </div>
-    <p class="note">任何注资与发奖都需要团队地址主动调用 approve + publishSeason，并在站点提前公示名单与 Merkle 根；不会自动发币。</p>
+    <p class="note">上述占比按旧代币 1000 亿枚总量计算。项目方未向这 3 个地址购买、借用或承诺任何新代币份额；新代币的分配表中不含这 3 个地址。</p>
   </section>
 
   <section>
     <h2>档案馆存证</h2>
-    <p class="sub">30 条记录的 Merkle 根已写入 Polygon，任何人可离线复核。</p>
+    <p class="sub">30 条记录的 Merkle 根已通过新存证合约写入 Polygon，任何人可离线复核。</p>
     <div class="kv">
-      <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0xb5f365df38247cb0d49e5e5d3237ed597019e5d9" target="_blank" rel="noopener">0xb5f365df38247cb0d49e5e5d3237ed597019e5d9</a></code></div>
-      <div class="row"><span>Merkle 根</span><code>0xbdff8289…73b905</code></div>
-      <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0x019726d029721d482c198f7ba0180fee2fc9cc278d772b1d53ce282b35a2d7c3" target="_blank" rel="noopener">0x019726d0…2d7c3</a></code></div>
-      <div class="row"><span>覆盖</span><code>30 / 30 条</code></div>
+      <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0x38bE675BD7E04AF650b1383EfF57124068d01F45" target="_blank" rel="noopener">0x38bE675BD7E04AF650b1383EfF57124068d01F45</a></code></div>
+      <div class="row"><span>owner</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</a>（金库 Safe · 3/5）</code></div>
+      <div class="row"><span>Merkle 根</span><code>0xbdff8289ef60fb345a8109b2151aa7adf2d445ecc83d03c38906c98e1c73b905</code></div>
+      <div class="row"><span>覆盖</span><code>30 / 30 条（recordCount = 30，批次 0）</code></div>
+      <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0xe7a9ace16cb6c2cd86daf946ae010730a5756c9250917edfaaa5cc678df0d728" target="_blank" rel="noopener">0xe7a9ace1…f0d728</a> · 区块 97,918,724</code></div>
+      <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0x1e67535af33ba4c8296627df4d389df9cf14ed7559727d5d9749220db946bd50" target="_blank" rel="noopener">0x1e67535a…46bd50</a> · 区块 97,918,072</code></div>
     </div>
+    <p class="note">核验：调用 anchors(0)，返回 (root, recordCount, timestamp, uri)，应与本页及 contracts/merkle.json 一致；离线复核用 contracts/verify_merkle.py。</p>
   </section>
 
   <section>
     <h2>风险与声明</h2>
     <div class="warnbox">
-      <b>没有资产背书，没有收益承诺。</b> 01 是社区实验型代币，不存在“域名背书 1 亿美金”或任何等价资产抵押；不承诺回购、保本、分红或价格上涨。团队 150 亿枚已进入 48 个月线性锁仓，50 亿枚奖励池由 2/3 多签持有；这提高可核验性，但不构成资产背书或收益承诺。代币价格可能归零，流动性极低，请勿投入无法承受损失的资金。
+      <b>没有资产背书，没有收益承诺。</b> ZERO1 是社区实验型代币，不存在任何等价资产抵押；不承诺回购、保本、分红或价格上涨。团队 25 亿枚已进入 6 个月 cliff + 48 个月线性锁仓，金库 40 亿枚进入 24 个月线性锁仓，社区奖励 20 亿枚由 3/5 多签持有；这提高可核验性，但不构成资产背书或收益承诺。当前没有 DEX 池，代币无法在市场上交易，价格可视为零，请勿投入任何资金。
       <br><br>
-      本页面不构成投资建议、要约或募集行为；在受限制的司法辖区不面向当地居民。贡献奖励由团队预留份额酌情发放，规则可能调整，任何发放均需链上公示。
+      本页面不构成投资建议、要约或募集行为；在受限制的司法辖区不面向当地居民。贡献奖励由社区奖励池按规则发放，规则可能调整，任何发放均需链上公示。
     </div>
   </section>
 
   <section>
     <h2>独立核验清单</h2>
     <div class="grid">
-      <div class="card"><b>1. 代币总量</b><p>打开代币合约 Read → totalSupply，应为 1000 亿 × 10^18。</p></div>
-      <div class="card"><b>2. LP 销毁</b><p>打开交易对合约 → totalSupply，再查 balanceOf(0x…dEaD)，应为 100%。</p></div>
-      <div class="card"><b>3. 团队份额</b><p>查代币 balanceOf(0x8AF1…666666)，当前应为 200 亿。</p></div>
-      <div class="card"><b>4. 奖励合约</b><p>查 owner()、token()、seasonCount()，当前 owner 为团队、seasonCount 为 0。</p></div>
+      <div class="card"><b>1. 代币总量与权限</b><p>打开 ZERO1 合约 0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa → totalSupply 应为 100 亿 × 10^18；合约无 owner()、无 mint()。</p></div>
+      <div class="card"><b>2. 分配余额</b><p>分别查 LP、金库 Safe、两个锁仓合约的 balanceOf，应为 10 亿 / 25 亿 / 40 亿 / 25 亿枚。</p></div>
+      <div class="card"><b>3. 锁仓参数</b><p>两个锁仓合约的 beneficiary 均为金库 Safe；金库 730 天无 cliff，团队 180 天 cliff + 1460 天线性；released 当前为 0。</p></div>
+      <div class="card"><b>4. 多签配置</b><p>金库 Safe 0x39C3…0101 的 getOwners() 返回 5 个地址，getThreshold() 返回 3。</p></div>
+      <div class="card"><b>5. 档案锚定</b><p>ArchiveAnchor 0x38bE…1F45 的 anchors(0) 返回本页 Merkle 根与 recordCount = 30。</p></div>
+      <div class="card"><b>6. 旧币归档</b><p>旧代币 0x095d…f1b7 与旧交易对 0x0b20…575b 仅为历史事实；新代币任何函数均不读取旧币余额。</p></div>
     </div>
   </section>
 

@@ -148,6 +148,11 @@
   .status.ok i{background:var(--green)}
   .note{font-size:12.5px;color:var(--muted);margin-top:12px}
   .note.warn{border-left:2px solid var(--gold);padding-left:10px;color:#e7d9a8}
+  .notice{margin:14px 0 0;border:1px solid rgba(251,191,36,.35);background:rgba(251,191,36,.07);
+    border-radius:14px;padding:14px 16px;font-size:13px;color:#fde68a}
+  .notice b{color:var(--gold)}
+  .notice code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+    color:#fef3c7;overflow-wrap:anywhere}
   ul.plain{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:13px}
   ul.plain li{margin:4px 0}
   footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);
@@ -177,6 +182,15 @@
       <a href="#about">关于 01</a>
     </div>
   </nav>
+
+  <div class="notice" id="notice">
+    <b>代币迁移公告（2026-11-25）</b>：旧 01 代币合约
+    <code><a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</a></code>
+    及旧交易对已全部作废，<b>不迁移、不映射旧持仓、不对旧持仓空投</b>。新代币为 <b>ZeroOne（ZERO1）</b>，合约
+    <code><a href="https://polygonscan.com/token/0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa" target="_blank" rel="noopener">0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa</a></code>，
+    总量固定 100 亿枚，无增发、无 owner、无交易税。旧币处置与 51.3% 狙击筹码归档见
+    <a href="transparency.html#history">旧币历史</a>。
+  </div>
 
   <header class="hero">
     <img class="hero-logo" src="01_logo.png" alt="01 Evolution">
@@ -240,13 +254,13 @@
     <p class="sub">档案内容留在链下，链上保存 30 条记录的 Merkle 根。一次存证即可完整承诺全部记录，任意一条都可用证明独立核验。</p>
     <div class="grid2">
       <div class="kv">
-        <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0xb5f365df38247cb0d49e5e5d3237ed597019e5d9" target="_blank" rel="noopener">0xb5f365df38247cb0d49e5e5d3237ed597019e5d9</a></code></div>
+        <div class="row"><span>存证合约</span><code><a href="https://polygonscan.com/address/0x38bE675BD7E04AF650b1383EfF57124068d01F45" target="_blank" rel="noopener">0x38bE675BD7E04AF650b1383EfF57124068d01F45</a></code></div>
         <div class="row"><span>部署状态</span><span class="status ok"><i></i>已部署 · Polygon</span></div>
-        <div class="row"><span>覆盖记录</span><code>30 / 30 条（recordCount = 1）</code></div>
+        <div class="row"><span>覆盖记录</span><code>30 / 30 条（recordCount = 30）</code></div>
         <div class="row"><span>Merkle 根</span><code>0xbdff8289ef60fb345a8109b2151aa7adf2d445ecc83d03c38906c98e1c73b905</code></div>
-        <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0x019726d029721d482c198f7ba0180fee2fc9cc278d772b1d53ce282b35a2d7c3" target="_blank" rel="noopener">0x019726d0…2d7c3</a></code></div>
-        <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0x97577d10391c2b3702bcc148833e1cd3ce78bd035aeb354ebcd6b557e26e696a" target="_blank" rel="noopener">0x97577d10…e696a</a></code></div>
-        <div class="row"><span>owner</span><code>0x8AF1…666666（团队地址）</code></div>
+        <div class="row"><span>存证交易</span><code><a href="https://polygonscan.com/tx/0xe7a9ace16cb6c2cd86daf946ae010730a5756c9250917edfaaa5cc678df0d728" target="_blank" rel="noopener">0xe7a9ace1…f0d728</a></code></div>
+        <div class="row"><span>部署交易</span><code><a href="https://polygonscan.com/tx/0x1e67535af33ba4c8296627df4d389df9cf14ed7559727d5d9749220db946bd50" target="_blank" rel="noopener">0x1e67535a…46bd50</a></code></div>
+        <div class="row"><span>owner</span><code>0x39C3…0101（金库 Safe · 3/5 多签）</code></div>
         <div class="row"><span>指纹算法</span><code>SHA-256 叶子 + Merkle(sorted-pair)</code></div>
         <div class="row"><span>存证网络</span><code>Polygon PoS</code></div>
         <div class="row"><span>核验脚本</span><code>contracts/verify_merkle.py</code></div>
@@ -260,7 +274,7 @@
           <li>任何人都能离线重算指纹与根，并用 verify_merkle.py 与链上记录比对。</li>
           <li>合约地址、owner 与两笔交易均可在 Polygonscan 核验，不伪造任何记录。</li>
         </ul>
-        <p class="note warn">合约部署实付 0.163149 POL；Merkle 根存证实付 0.050932 POL。逐条单独上链的成本约为该方案的 30 倍，当前余额不足，因此采用一次性承诺。</p>
+        <p class="note warn">合约部署 gas 506,733（约 0.1408 POL）；Merkle 根存证 gas 228,013（约 0.0651 POL）。逐条单独上链的成本约为该方案的 30 倍，因此采用一次性承诺。</p>
       </div>
     </div>
   </section>
@@ -272,15 +286,15 @@
       <div class="kv">
         <div class="row"><span>本季状态</span><code>进行中 · 2026-11-23 启动 · 已延长至 2027-01-31</code></div>
         <div class="row"><span>本季周期</span><code>2026-11-23 至 2027-01-31（UTC）</code></div>
-        <div class="row"><span>周期调整</span><code>由 2026-12-20 延长至 2027-01-31，奖励池不变</code></div>
-        <div class="row"><span>兑换池</span><code>50 亿份（固定总量的 5%）</code></div>
-        <div class="row"><span>发奖合约</span><code><a href="https://polygonscan.com/address/0x781b218941d59ca613b292baff5b2c5638309d50" target="_blank" rel="noopener">0x781b…9d50</a></code></div>
-        <div class="row"><span>奖励池 Safe</span><code><a href="https://polygonscan.com/address/0x0914120572fE015Bea35339931ac30b8A5eebF4D" target="_blank" rel="noopener">0x0914…bF4D</a> · 2/3 · 50 亿枚</code></div>
-        <div class="row"><span>团队锁仓</span><code><a href="https://polygonscan.com/address/0xe57461E12d93fd9dA2895FC99128329088C4B5B2" target="_blank" rel="noopener">0xe574…B5B2</a> · 48 个月</code></div>
-        <div class="row"><span>参与费用</span><code>0（链上兑换时自付 gas）</code></div>
+        <div class="row"><span>社区奖励池</span><code>20 亿枚 ZERO1（总量的 20%）</code></div>
+        <div class="row"><span>释放曲线</span><code>每 8 个季度减半：第 1–8 季每季 1.25 亿枚，第 9–16 季每季 0.625 亿枚，依此类推</code></div>
+        <div class="row"><span>本季额度</span><code>1.25 亿枚（首个 8 季周期）</code></div>
+        <div class="row"><span>个人上限</span><code>125 万枚（本季额度的 1%）</code></div>
+        <div class="row"><span>存放地址</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3…0101</a> · 金库 Safe · 3/5</code></div>
+        <div class="row"><span>发奖方式</span><code>每季独立 Merkle 根 + MerkleDistributor（部署前公示）</code></div>
+        <div class="row"><span>参与费用</span><code>0（链上领取时自付 gas）</code></div>
         <div class="row"><span>计分方式</span><code>基础分 × 质量系数 0.5–1.5</code></div>
         <div class="row"><span>每周上限</span><code>2,000 分（开发/安全/设计除外）</code></div>
-        <div class="row"><span>个人上限</span><code>5,000 万份（兑换池的 1%）</code></div>
         <div class="row"><span>完整规则</span><code><a href="POINTS.md">POINTS.md</a></code></div>
       </div>
       <div>
@@ -290,8 +304,8 @@
           <li>在 GitHub 提交「贡献登记」Issue，附作品链接和账号。</li>
           <li>两名复核人独立评分，取平均质量系数。</li>
           <li>记入贡献台账，每周公示积分榜。</li>
-          <li>季末快照、公示 7 天，生成 Merkle 名单。</li>
-          <li>兑换由参与者自行发起并支付 gas，不承诺具体日期。</li>
+          <li>季末快照、公示 7 天，生成当季 Merkle 名单。</li>
+          <li>MerkleDistributor 部署后由参与者自行领取并支付 gas，不承诺具体日期。</li>
         </ul>
         <p style="margin-top:14px">
           <a class="btn" href="https://github.com/01First/01-evolution-archive/issues/new?template=contribution.yml" target="_blank" rel="noopener">登记贡献</a>
@@ -300,35 +314,41 @@
           <a class="btn ghost" href="transparency.html" style="margin-left:8px">透明度页</a>
         </p>
         <p class="note">首批开放：内容创作、开发/设计/文档、档案纠错、GitHub 讨论。官方 X/Telegram/Discord 尚未开通，相关社交任务暂缓计分。</p>
-        <p class="note warn">积分只记录贡献，不可转让、不构成收益承诺；奖励来自团队预留份额，不新增发行、不动池子。发奖合约已部署且 owner 已转至奖励 Safe；团队 150 亿已进入 48 个月线性锁仓，详见<a href="transparency.html">透明度页</a>。</p>
+        <p class="note warn">旧发奖合约 0x781b218941d59ca613b292baff5b2c5638309d50、旧奖励 Safe 0x0914120572fE015Bea35339931ac30b8A5eebF4D 与旧团队锁仓 0xe57461E12d93fd9dA2895FC99128329088C4B5B2 已随旧币一并作废，不再使用，旧持仓不映射、不空投。当前社区奖励由新金库 Safe 持有，MerkleDistributor 尚未部署；新锁仓见<a href="transparency.html">透明度页</a>。</p>
       </div>
     </div>
   </section>
 
   <section class="block" id="about">
     <h2>关于 01</h2>
-    <p class="sub">01 / 进化币：把“区块链的进化”做成一个可被引用、可被核验的公共档案。</p>
+    <p class="sub">01 / 进化档案馆：把“区块链的进化”做成一个可被引用、可被核验的公共档案。新代币为 ZeroOne（ZERO1）。</p>
     <div class="grid2">
       <div class="kv">
-        <div class="row"><span>代币名称</span><code>01 Evolution（进化币）</code></div>
-        <div class="row"><span>总供应</span><code>1000 亿枚（固定，无 mint）</code></div>
-        <div class="row"><span>代币合约</span><code>0x095d3d6e62c8e2e845a38d239601b10c71fff1b7</code></div>
-        <div class="row"><span>DEX 交易对</span><code>0x0b202ad83212b460bc2b26913b3727662383575b</code></div>
+        <div class="row"><span>代币名称</span><code>ZeroOne（ZERO1）</code></div>
+        <div class="row"><span>总供应</span><code>100 亿枚（固定，无 mint）</code></div>
+        <div class="row"><span>代币合约</span><code><a href="https://polygonscan.com/token/0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa" target="_blank" rel="noopener">0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa</a></code></div>
+        <div class="row"><span>金库 Safe</span><code><a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">0x39C3730c1a5C42e763a8DEEA968a8A3D01010101</a> · 3/5</code></div>
+        <div class="row"><span>分配结构</span><code>金库 40% · 团队 25% · 社区 20% · 流动性 10% · 创世空投 5%</code></div>
+        <div class="row"><span>DEX 交易对</span><code>暂无（当前无池，未上线交易）</code></div>
         <div class="row"><span>网络</span><code>Polygon PoS</code></div>
       </div>
       <div>
         <p class="note">档案馆与代币的关系：</p>
         <ul class="plain">
-          <li>贡献奖励来自团队预留份额，不新增发行、不动池子流动性。</li>
+          <li>贡献奖励来自社区奖励池（20 亿枚），不新增发行、不动流动性储备。</li>
           <li>档案不承诺收益、不募资，仅为公开内容与链上存证。</li>
           <li>所有记录附来源链接；无法核验的内容不收。</li>
           <li>失败与崩塌同样记录——进化史不只由成功构成。</li>
+          <li>旧 01 代币与旧交易对已作废：不迁移、不映射旧持仓、不对旧持仓空投。</li>
         </ul>
         <p class="note">合约地址：
-          <a href="https://polygonscan.com/token/0x095d3d6e62c8e2e845a38d239601b10c71fff1b7" target="_blank" rel="noopener">代币</a>
+          <a href="https://polygonscan.com/token/0xb48c5204B8f4E59C33C8C0e4E89103cAcB4033Fa" target="_blank" rel="noopener">ZERO1 代币</a>
           ·
-          <a href="https://polygonscan.com/address/0x0b202ad83212b460bc2b26913b3727662383575b" target="_blank" rel="noopener">交易对</a>
+          <a href="https://polygonscan.com/address/0x39C3730c1a5C42e763a8DEEA968a8A3D01010101" target="_blank" rel="noopener">金库 Safe</a>
+          ·
+          <a href="transparency.html#history">旧币历史</a>
         </p>
+        <p class="note warn">旧代币合约 0x095d3d6e62c8e2e845a38d239601b10c71fff1b7、旧交易对 0x0b202ad83212b460bc2b26913b3727662383575b 及配套旧合约均已停用。</p>
       </div>
     </div>
   </section>

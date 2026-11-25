@@ -2,7 +2,9 @@
  "algorithm": "sha256-sorted-pair-odd-promote",
  "uri": "01archive:v1:30:sha256",
  "root": "0xbdff8289ef60fb345a8109b2151aa7adf2d445ecc83d03c38906c98e1c73b905",
- "contract": "0xb5f365df38247cb0d49e5e5d3237ed597019e5d9",
+ "contract": "0x38bE675BD7E04AF650b1383EfF57124068d01F45",
+ "anchor_tx": "0xe7a9ace16cb6c2cd86daf946ae010730a5756c9250917edfaaa5cc678df0d728",
+ "anchor_block": 97918724,
  "chain": "polygon",
  "count": 30,
  "leaves": [
